@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Crédito/Inversión </title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+<div class="container_main">
+
+	<div class="section">
+		<div class="container">
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+						<h6 class="mb-0 pb-2"><span style="color: #074173; font-size: large">Crédito</span><span style="color: #074173; font-size: large">Inversión</span></h6>
+			          	<input class="checkbox" type="checkbox" id="option_sim" name="option_sim"/>
+			          	<label for="option_sim"></label>
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Crédito</h4>
+											<div class="form-group">
+												<input name="montoSolic" class="form-style" placeholder="Monto a Solicitar" id="montoSolic"
+												type="number" step="500"
+												min="0">
+												<i class="input-icon uil uil-money-bill"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<select 
+												name="frecInv" class="form-style" id="frecInv">
+													<option value="" disabled selected>Frecuencia de Pago</option>
+													<option value="mensual">Mensual</option>
+													<option value="bimensual">Bimensual</option>
+													<option value="trimestral">Trimestral</option>
+													<option value="cuatrimestral">Cuatrimestral</option>
+													<option value="semestral">Semestral</option>
+													<option value="nueve-meses">Nueve Meses</option>
+													<option value="anual">Anual</option>
+												</select>
+												<i class="input-icon uil uil-calendar-alt"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input name="numCuot" class="form-style" placeholder="# Cuotas" id="numCout" autocomplete="off"
+												type="number" step="1"
+												min="0">
+												<i class="input-icon uil uil-coins"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input name="tasaCred" class="form-style" placeholder="Tasa de Interés (%)" id="tasaCred" autocomplete="off"
+												type="number" step="0.1"
+												min="0">
+												<i class="input-icon uil uil-chart-line"></i>
+											</div>
+											<div class="form-group mt-2">
+												<select 
+												name="sistAmort" class="form-style" id="sistAmort">
+													<option value="" disabled selected>Sistema de Amortización</option>
+													<option value="aleman">Alemán</option>
+													<option value="frances">Francés</option>
+												</select>
+												<i class="input-icon uil uil-calculator"></i>
+											</div>
+											<a style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
+											<a style="padding-right: 44.5px; padding-left: 44.5px; margin-left: 5px;" href="#" class="btn mt-4">Limpiar</a>
+				      					</div>
+			      					</div>
+			      				</div>
+								<div class="card-back">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Inversión</h4>
+											<div class="form-group">
+												<input name="montoInv" class="form-style" placeholder="Monto a Invertir" id="montoInv"
+												type="number" step="500"
+												min="0">
+												<i class="input-icon uil uil-money-bill"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<select 
+												name="frecInv" class="form-style" id="frecInv">
+													<option value="" disabled selected>Frecuencia</option>
+													<option value="dias">Días</option>
+													<option value="meses">Meses</option>
+													<option value="anios">Años</option>
+												</select>
+												<i class="input-icon uil uil-calendar-alt"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input name="plazoInv" class="form-style" placeholder="Plazo" id="plazoInv" autocomplete="off"
+												type="number" step="1"
+												min="0">
+												<i class="input-icon uil uil-coins"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input name="tasaInv" class="form-style" placeholder="Tasa de Interés (%)" id="tasaInv" autocomplete="off"
+												type="number" step="0.1"
+												min="0">
+												<i class="input-icon uil uil-chart-line"></i>
+											</div>
+											<div class="form-group mt-2">
+												<select 
+												name="sistAmortInv" class="form-style" id="sistAmortInv">
+													<option value="" disabled selected>Sistema de Amortización</option>
+													<option value="aleman">Alemán</option>
+													<option value="frances">Francés</option>
+												</select>
+												<i class="input-icon uil uil-calculator"></i>
+											</div>
+											<a style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
+											<a style="padding-right: 44.5px; padding-left: 44.5px; margin-left: 5px;" href="#" class="btn mt-4">Limpiar</a>
+			      					</div>
+			      				</div>
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
+</div>
+  
+</body>
+</html>
