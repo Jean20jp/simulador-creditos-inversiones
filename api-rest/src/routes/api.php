@@ -1,6 +1,7 @@
 <?php
 
 require_once '../api-rest/src/controllers/UserController.php';
+require_once '../api-rest/src/controllers/FinancialEntityController.php';
 require_once '../api-rest/src/models/User.php';
 include_once '../api-rest/src/config/constants.php';
 
@@ -8,6 +9,10 @@ require 'vendor/autoload.php';
 
 function getUserController() {
     return new UserController();
+}
+
+function getFinancialEntityController() {
+    return new FinancialEntityController();
 }
 
 // Recibe json con el email y contraseña
@@ -57,6 +62,42 @@ Flight::route('GET /getUsers', function() {
 
 });
 
-Flight::start();
+Flight::route('POST /registerFinancialEntity', function() {
+
+    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+
+    $data = Flight::request()->data;
+
+    if ($data != null) {
+        // Crear modelo con el json recibido para enviar al controlador
+        $entity = new FinancialEntity(0, $data['name'], $data['phone'], $data['address'], $data['logo']);
+        Flight::json(getFinancialEntityController()->registerFinancialEntity($entity, $headers));
+
+    } else {
+
+        Flight::json(["error" => "Se requiere todos los campos", BAD_REQUEST]);
+    }
+
+});
+
+Flight::route('GET /getFinancialEntity', function() {
+
+    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+
+    $response = getFinancialEntityController()->getFinancialEntities($headers); // Obtener respuesta de la capa de datos
+
+    if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
+        Flight::halt(FORBIDDEN, $response["error"]);
+    } else {
+        Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+    }
+});
+
+
+
+
+
+
+Flight::start(); 
 
 ?>

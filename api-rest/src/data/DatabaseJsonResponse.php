@@ -196,7 +196,7 @@ class DatabaseJsonResponse
     ==============================================================================
     */
 
-    private function insertFinancialEntity($financialEntity, $headers) {
+    public function insertFinancialEntity($financialEntity, $headers) {
 
         if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
             return array(
@@ -231,7 +231,7 @@ class DatabaseJsonResponse
         return $array;
     }
 
-    private function getFinancialEntities($headers) {
+    public function getFinancialEntities($headers) {
 
         if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
             return array(
