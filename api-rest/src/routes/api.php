@@ -3,7 +3,11 @@
 require_once '../api-rest/src/controllers/UserController.php';
 require_once '../api-rest/src/controllers/FinancialEntityController.php';
 require_once '../api-rest/src/controllers/TypeCreditController.php';
+require_once '../api-rest/src/controllers/TypeInvestmentController.php';
 require_once '../api-rest/src/models/User.php';
+require_once '../api-rest/src/models/FinancialEntity.php';
+require_once '../api-rest/src/models/TypeCredit.php';
+require_once '../api-rest/src/models/TypeInvestment.php';
 include_once '../api-rest/src/config/constants.php';
 
 require 'vendor/autoload.php';
@@ -84,7 +88,8 @@ Flight::route('GET /getFinancialEntity', function() {
     if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
         Flight::halt(FORBIDDEN, $response["error"]);
     } else {
-        Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+        Flight::json($response); // Si el estado es OK devuelve el json
+        //echo json_encode($response);
     }
 });
 
@@ -114,7 +119,7 @@ Flight::route('GET /getTypesCredits', function() {
     if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
         Flight::halt(FORBIDDEN, $response["error"]);
     } else {
-        Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+        Flight::json($response); // Si el estado es OK devuelve el json
     }
 });
 
@@ -127,7 +132,7 @@ Flight::route('GET /getTypesInvestments', function() {
     if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
         Flight::halt(FORBIDDEN, $response["error"]);
     } else {
-        Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+        Flight::json($response); // Si el estado es OK devuelve el json
     }
 });
 

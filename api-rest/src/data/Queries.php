@@ -60,7 +60,7 @@ class Queries {
     public function queryInsertTypeInvestment() {
         $query = "INSERT INTO type_investment
                     SET id_entity_per = :idEntPer,
-                        name_investment = :nameInvest
+                        name_investment = :nameInvest,
                         rate_investment = :rateInvest";
         return $query;             
     }
@@ -70,7 +70,6 @@ class Queries {
                     FROM type_investment";
         return $query;
     }
-
 }
 
 ?>

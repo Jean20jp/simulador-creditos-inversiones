@@ -184,7 +184,7 @@ class DatabaseJsonResponse
 
         $result = $query->execute([":nameent" => $financialEntity->getNameEntity(),
             ":phone" => $financialEntity->getPhoneEntity(), ":addressent" => $financialEntity->getAddressEntity(),
-            ":logo" => $financialEntity->getLogoEntity()
+            ":logo" => base64_decode($financialEntity->getLogoEntity())
         ]);
 
         // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
@@ -212,19 +212,20 @@ class DatabaseJsonResponse
         $data = $query->fetchAll();
         $entities = [];
         foreach ($data as $row) {
+            
             $entities[] = [
                 "id" => $row['id_entity'],
                 "name" => $row['name_entity'],
                 "phone" => $row['phone_entity'],
                 "address" => $row['address_entity'],
-                "logo" => $row['logo_entity']
+                "logo" => base64_encode($row['logo_entity'])
             ];
         }
 
         return array(
+            "status" => 'OK',
             "total_entities" => $query->rowCount(),
-            "entities" => $entities,
-            "status" => 'OK'
+            "entities" => $entities            
         );
     }
 
@@ -244,7 +245,7 @@ class DatabaseJsonResponse
             "status" => "Error"
         ];
 
-        $result = $query->execute([0, ":idEntPer" => $typeCredit->getIdEntPer(),
+        $result = $query->execute([":idEntPer" => $typeCredit->getIdEntPer(),
             ":nameCred" => $typeCredit->getNameCred(), ":rateCred" => $typeCredit->getRateCred()]);
 
         // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
@@ -304,7 +305,7 @@ class DatabaseJsonResponse
             "status" => "Error"
         ];
 
-        $result = $query->execute([0, ":idEntPer" => $typeInvest->getIdEntPer(),
+        $result = $query->execute([":idEntPer" => $typeInvest->getIdEntPer(),
             ":nameInvest" => $typeInvest->getNameInvest(), ":rateInvest" => $typeInvest->getRateInvest()]);
 
         // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
