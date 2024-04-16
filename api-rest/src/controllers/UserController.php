@@ -21,11 +21,6 @@ class UserController {
         return $this->dbJsonResponse->registerUser($user);
     }
 
-    public function getUsers($headers) {
-
-        return $this->dbJsonResponse->getUsers($headers);
-    }
-
 }
 
 ?>

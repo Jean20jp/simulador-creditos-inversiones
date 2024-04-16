@@ -259,6 +259,36 @@ class DatabaseJsonResponse
         return $array;
     }
 
+    public function getTypesCredits($headers) {
+
+        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+            return array(
+                "error" =>  $this->validateToken($headers)["error"],
+                "status" => 'error'
+            );
+        }
+
+        $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesCredits());
+        $query->execute();
+        $data = $query->fetchAll();
+        $typesCredits = [];
+        foreach ($data as $row) {
+            $typesCredits[] = [
+                "id_cred" => $row['id_credit'],
+                "id_ent_per" => $row['id_entity_per'],
+                "name_cred" => $row['name_credit'],
+                "rate_cred" => $row['rate_credit']
+            ];
+        }
+
+        return array(
+            "total_credits" => $query->rowCount(),
+            "types_credits" => $typesCredits,
+            "status" => 'OK'
+        );
+
+    }
+
 
 
 }
