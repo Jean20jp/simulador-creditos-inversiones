@@ -66,7 +66,7 @@ class DatabaseJsonResponse
 
         // Array de respuesta por defecto con estado de error
         $array = [
-            "error" => "Error el registrar usuario.",
+            "error" => "Error al registrar usuario.",
             "status" => "Error"
         ];
 
@@ -87,36 +87,6 @@ class DatabaseJsonResponse
         }
 
         return $array;
-    }
-
-    public function getUsers($headers)
-    {
-
-        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
-            return array(
-                "error" =>  $this->validateToken($headers)["error"],
-                "status" => 'error'
-            );
-        }
-        $query = $this->svDatabase->prepare($this->sqlQueries->queryGetUsers());
-        $query->execute();
-        $data = $query->fetchAll();
-        $users = [];
-        foreach ($data as $row) {
-            $users[] = [
-                "id" => $row['id_user'],
-                "nombre" => $row['nomb_user'],
-                "apellido" => $row['apell_user'],
-                "nick" => $row['nick_user'],
-                "email" => $row['email_user']
-            ];
-        }
-
-        return array(
-            "total_users" => $query->rowCount(),
-            "users" => $users,
-            "status" => 'OK'
-        );
     }
 
     // Construye y retorna el token con la información y el usuario($data) requeridos
@@ -209,10 +179,9 @@ class DatabaseJsonResponse
 
         // Array de respuesta por defecto con estado de error
         $array = [
-            "error" => "Error el registrar usuario.",
+            "error" => "Error al registrar entidad financiera.",
             "status" => "Error"
         ];
-
 
         $result = $query->execute([":nameent" => $financialEntity->getNameEntity(),
             ":phone" => $financialEntity->getPhoneEntity(), ":addressent" => $financialEntity->getAddressEntity(),
@@ -227,7 +196,6 @@ class DatabaseJsonResponse
                 "status" => 'OK'
             ];
         }
-
         return $array;
     }
 
@@ -259,8 +227,36 @@ class DatabaseJsonResponse
             "entities" => $entities,
             "status" => 'OK'
         );
+    }
 
+    public function insertTypeCredit($typeCredit, $headers) {
+        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+            return array(
+                "error" =>  $this->validateToken($headers)["error"],
+                "status" => 'error'
+            );
+        }
+        
+        $query = $this->svDatabase->prepare($this->sqlQueries->queryInsertTypeCredit());
 
+        // Array de respuesta por defecto con estado de error
+        $array = [
+            "error" => "Error al registrar tipo de crédito.",
+            "status" => "Error"
+        ];
+
+        $result = $query->execute([0, ":idEntPer" => $typeCredit->getIdEntity(),
+            ":nameCred" => $typeCredit->getNameEnt(), ":rateCred" => $typeCredit->getRateEnt()]);
+
+        // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
+        if ($result) {
+
+            $array = [
+                "message" => 'Registro satisfactorio.',
+                "status" => 'OK'
+            ];
+        }
+        return $array;
     }
 
 

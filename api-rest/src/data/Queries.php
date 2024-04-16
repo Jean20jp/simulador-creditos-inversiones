@@ -28,12 +28,6 @@ class Queries {
         return $query;
     }
 
-    public function queryGetUsers() {
-        $query = "SELECT id_user, nomb_user, apell_user, nick_user, email_user FROM user";
-        
-        return $query;
-    }
-
     public function queryGetFinancialEntities() {
         $query = "SELECT id_entity, name_entity, phone_entity, address_entity, logo_entity";
         return $query;
@@ -46,6 +40,19 @@ class Queries {
                         address_entity = :addressent,
                         logo_entity = :logo";
         return $query;
+    }
+
+    public function queryGetTypesCredits() {
+        $query = "SELECT id_credit, id_entity_per, name_credit, rate_credit";
+        return $query;
+    }
+
+    public function queryInsertTypeCredit() {
+        $query = "INSERT INTO type_credit
+                    SET id_entity_per = :idEntPer,
+                        name_credit = :nameCred,
+                        rate_credit = :rateCred";
+        return $query;             
     }
 }
 
