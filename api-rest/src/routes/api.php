@@ -20,6 +20,10 @@ function getTypeCreditController() {
     return new TypeCreditController();
 }
 
+function getTypeInvestmentController() {
+    return new TypeInvestmentController();
+}
+
 // Recibe json con el email y contraseña
 Flight::route('POST /login', function () {
     
@@ -111,6 +115,36 @@ Flight::route('GET /getTypesCredits', function() {
         Flight::halt(FORBIDDEN, $response["error"]);
     } else {
         Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+    }
+});
+
+Flight::route('GET /getTypesInvestments', function() {
+
+    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+
+    $response = getTypeInvestmentController()->getTypesInvestments($headers); // Obtener respuesta de la capa de datos
+
+    if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
+        Flight::halt(FORBIDDEN, $response["error"]);
+    } else {
+        Flight::json($response); // Si el estado es OK devuelve la lista de usuarios
+    }
+});
+
+Flight::route('POST /registerTypeInvestment', function() {
+
+    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+
+    $data = Flight::request()->data;
+
+    if ($data != null) {
+        // Crear modelo con el json recibido para enviar al controlador
+        $typeInvestment = new TypeInvestment(0, $data['id_ent_per'], $data['name_invest'], $data['rate_invest']);
+        Flight::json(getTypeInvestmentController()->registerTypeInvestment($typeInvestment, $headers));
+
+    } else {
+
+        Flight::json(["error" => "Se requiere todos los campos", BAD_REQUEST]);
     }
 });
 

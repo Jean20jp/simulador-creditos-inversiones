@@ -85,7 +85,6 @@ class DatabaseJsonResponse
                 "status" => 'OK'
             ];
         }
-
         return $array;
     }
 
@@ -245,8 +244,8 @@ class DatabaseJsonResponse
             "status" => "Error"
         ];
 
-        $result = $query->execute([0, ":idEntPer" => $typeCredit->getIdEntity(),
-            ":nameCred" => $typeCredit->getNameEnt(), ":rateCred" => $typeCredit->getRateEnt()]);
+        $result = $query->execute([0, ":idEntPer" => $typeCredit->getIdEntPer(),
+            ":nameCred" => $typeCredit->getNameCred(), ":rateCred" => $typeCredit->getRateCred()]);
 
         // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
         if ($result) {
@@ -286,11 +285,67 @@ class DatabaseJsonResponse
             "types_credits" => $typesCredits,
             "status" => 'OK'
         );
-
     }
 
+    public function insertTypeInvestment($typeInvest, $headers) {
 
+        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+            return array(
+                "error" =>  $this->validateToken($headers)["error"],
+                "status" => 'error'
+            );
+        }
+        
+        $query = $this->svDatabase->prepare($this->sqlQueries->queryInsertTypeInvestment());
 
+        // Array de respuesta por defecto con estado de error
+        $array = [
+            "error" => "Error al registrar tipo de inversión.",
+            "status" => "Error"
+        ];
+
+        $result = $query->execute([0, ":idEntPer" => $typeInvest->getIdEntPer(),
+            ":nameInvest" => $typeInvest->getNameInvest(), ":rateInvest" => $typeInvest->getRateInvest()]);
+
+        // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
+        if ($result) {
+
+            $array = [
+                "message" => 'Registro satisfactorio.',
+                "status" => 'OK'
+            ];
+        }
+        return $array;
+    }
+
+    public function getTypesInvestments($headers) {
+
+        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+            return array(
+                "error" =>  $this->validateToken($headers)["error"],
+                "status" => 'error'
+            );
+        }
+
+        $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesInvestments());
+        $query->execute();
+        $data = $query->fetchAll();
+        $typesInvestments = [];
+        foreach ($data as $row) {
+            $typesInvestments[] = [
+                "id_invest" => $row['id_investment'],
+                "id_ent_per" => $row['id_entity_per'],
+                "name_invest" => $row['name_investment'],
+                "rate_invest" => $row['rate_investment']
+            ];
+        }
+
+        return array(
+            "total_investments" => $query->rowCount(),
+            "types_investments" => $typesInvestments,
+            "status" => 'OK'
+        );
+    }
 }
 
 ?>

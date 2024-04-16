@@ -29,7 +29,8 @@ class Queries {
     }
 
     public function queryGetFinancialEntities() {
-        $query = "SELECT id_entity, name_entity, phone_entity, address_entity, logo_entity";
+        $query = "SELECT id_entity, name_entity, phone_entity, address_entity, logo_entity
+                    FROM financial_entity";
         return $query;
     }
 
@@ -43,7 +44,8 @@ class Queries {
     }
 
     public function queryGetTypesCredits() {
-        $query = "SELECT id_credit, id_entity_per, name_credit, rate_credit";
+        $query = "SELECT id_credit, id_entity_per, name_credit, rate_credit
+                    FROM type_credit";
         return $query;
     }
 
@@ -54,6 +56,21 @@ class Queries {
                         rate_credit = :rateCred";
         return $query;             
     }
+
+    public function queryInsertTypeInvestment() {
+        $query = "INSERT INTO type_investment
+                    SET id_entity_per = :idEntPer,
+                        name_investment = :nameInvest
+                        rate_investment = :rateInvest";
+        return $query;             
+    }
+
+    public function queryGetTypesInvestments() {
+        $query = "SELECT id_investment, id_entity_per, name_investment, rate_investment
+                    FROM type_investment";
+        return $query;
+    }
+
 }
 
 ?>

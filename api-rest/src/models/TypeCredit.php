@@ -2,7 +2,7 @@
 
 // Modelo Tipo de Credito
 class TypeCredit {
-    
+
     private $id;
     private $idEntPer;
     private $nameCred;
@@ -19,15 +19,15 @@ class TypeCredit {
         return $this->id;
     }
 
-    public function getIdEntity() {
+    public function getIdEntPer() {
         return $this->idEntPer;
     }
 
-    public function getNameEnt() {
+    public function getNameCred() {
         return $this->nameCred;
     }
 
-    public function getRateEnt() {
+    public function getRateCred() {
         return $this->rateCred;
     }
 }

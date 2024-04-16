@@ -37,7 +37,5 @@ class FinancialEntity {
     public function getLogoEntity() {
         return $this->logo_entity;
     }
-
-
 }
 ?>
