@@ -77,8 +77,8 @@ function generarTabla() {
         cuotaTotal = cuotaMensual * plazoMensual;
 
         // Generar la tabla HTML con el detalle de cada cuota para sistema alemán
-        let tablaDetalleHTML = '<table class="table"><thead><tr><th scope="col">N° Cuota</th><th scope="col">Fecha</th><th scope="col">Abono a Capital</th><th scope="col">Interés</th><th scope="col">Seguro</th><th scope="col">Cuota</th><th scope="col">Saldo</th></tr></thead><tbody>';
-        // Calcular fecha de la primera cuota
+        let tablaDetalleHTML = '<table class="table"><thead><tr><th colspan="7" class="text-center">Tabla de Amortización</th></tr><tr><th scope="col">N° Cuota</th><th scope="col">Fecha</th><th scope="col">Abono a Capital</th><th scope="col">Interés</th><th scope="col">Seguro</th><th scope="col">Cuota</th><th scope="col">Saldo</th></tr></thead><tbody>';
+  // Calcular fecha de la primera cuota
         let fecha = new Date();
         for (let i = 1; i <= plazoPrestamo; i++) {
             let abonoCapital = montoSolicitado / plazoPrestamo;
@@ -104,8 +104,8 @@ function generarTabla() {
         cuotaTotal = cuotaMensual * plazoMensual;
 
         // Generar la tabla HTML con el detalle de cada cuota para sistema francés
-        let tablaDetalleHTML = '<table class="table"><thead><tr><th scope="col">N° Cuota</th><th scope="col">Fecha</th><th scope="col">Abono a Capital</th><th scope="col">Interés</th><th scope="col">Seguro</th><th scope="col">Cuota</th><th scope="col">Saldo</th></tr></thead><tbody>';
-        // Calcular fecha de la primera cuota
+        let tablaDetalleHTML = '<table class="table"><thead><tr><th colspan="7" class="text-center">Tabla de Amortización</th></tr><tr><th scope="col">N° Cuota</th><th scope="col">Fecha</th><th scope="col">Abono a Capital</th><th scope="col">Interés</th><th scope="col">Seguro</th><th scope="col">Cuota</th><th scope="col">Saldo</th></tr></thead><tbody>';
+ // Calcular fecha de la primera cuota
         let fecha = new Date();
         for (let i = 1; i <= plazoPrestamo; i++) {
             let abonoCapital = cuotaMensual - (montoSolicitado * tasaMensual);
