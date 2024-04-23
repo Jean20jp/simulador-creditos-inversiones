@@ -7,6 +7,17 @@
   background-color: #e3e9f3;
 }
 
+.card {
+  background-color: #191a1a;
+  max-width: 400px;
+  justify-content: center;
+  margin: 0 auto; /* Centrar horizontalmente */
+   
+
+}
+
+
+
 
 body{
 	font-family: 'Poppins', sans-serif;
