@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
+
+.tabla-scroll {
+  max-height: 300px; /* Altura máxima del contenedor */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  background-color: #e3e9f3;
+}
+
+.card {
+  background-color: #191a1a;
+  max-width: 400px;
+  justify-content: center;
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
 body{
 	font-family: 'Poppins', sans-serif;
 	font-weight: 300;
@@ -24,6 +38,7 @@ a {
 a:hover {
 	text-decoration: none;
 }
+ 
 
 p {
   font-weight: 500;
