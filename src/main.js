@@ -185,7 +185,14 @@ function generarTarjetaInversion() {
     document.getElementById('tarjetaInversionContainer').innerHTML = tarjetaHTML;
 }
 
-
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('btnLimpiar').addEventListener('click', function() {
+        location.reload();
+    });
+    document.getElementById('btnLimpiar2').addEventListener('click', function() {
+        location.reload();
+    });
+});
 
 
 
