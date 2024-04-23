@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
-
-
 body{
 	font-family: 'Poppins', sans-serif;
 	font-weight: 300;
@@ -9,8 +7,16 @@ body{
 	line-height: 1.7;
 	color: #F0EBE3;
 	background-color: #B5C0D0;
-	overflow-x: hidden;
+  place-items: center;
+  overflow-y: hidden;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 a {
 	cursor: pointer;
   transition: all 200ms linear;
@@ -24,14 +30,66 @@ p {
   font-size: 14px;
   line-height: 1.7;
 }
-h4 {
-  font-weight: 600;
-}
+
 h6 span{
   padding: 0 20px;
   text-transform: uppercase;
   font-weight: 700;
 }
+
+.menu__wrapper {
+  display: flex;
+  position: fixed;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vw;
+  z-index: 2;
+  gap: 1.5rem; 
+  background-color: #074173;
+  height: 4rem;
+  padding: 0px 1rem;
+  border-bottom: 1px solid #074173;
+  align-items: center;
+}
+
+.logo__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page__title {
+  color: #F0EBE3;
+  padding: 0.5rem 0.75rem;
+  align-items: center;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: all 0.45s ease-in-out;
+  text-decoration: none;
+}
+
+.page__title:hover {
+  background: #B5C0D0;
+}
+
+@media (max-width: 450px) {
+  .page__title {
+      display: none;
+  }
+}
+
+@media (width >= 500px) {
+  body {
+    padding: 0;
+  }
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
 .section{
   position: relative;
   width: 100%;
@@ -80,7 +138,6 @@ h6 span{
 .checkbox:checked + label:before {
   transform: translateX(44px) rotate(-270deg);
 }
-
 
 .card-3d-wrap {
   position: relative;
@@ -137,12 +194,11 @@ h6 span{
   display: block;
 }
 
-
 .form-group{ 
   position: relative;
   display: block;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .form-style {
   padding: 13px 20px;
@@ -264,4 +320,72 @@ h6 span{
   background-color: #8B322C;
   color: #FFC470;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+
+.photoLogin {
+  margin-top: 30px;
+  margin-bottom:20px;
+}
+
+.card_entity {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 1.5rem;
+  background-color: #074173;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s;
+  max-width: clamp(90px, 10vw, 140px);
+  min-width: 40rem;
+  min-height: 5rem;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+
+.card_entity:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 
+      0px 5px 15px;
+}
+
+.background {
+  flex: 1 1 15rem;
+}
+
+.background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  flex: 3 1 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+
+.content > h2 {
+  font-size: clamp(
+      1rem, 2vw, 
+      1.3rem);
+  font-weight: 700;
+  margin-bottom: clamp(
+      0.35rem, 2vw, 
+      0.55rem
+  );
+}
+
+.content > p {
+  font-size: clamp(1rem, 
+      1.75vw, 1.1rem);
+  font-weight: 400;
+  margin: 0.4rem 0;
+}
+
+.container {
+  display: grid;
+  gap: 10px;
+  justify-content: center;
 }
