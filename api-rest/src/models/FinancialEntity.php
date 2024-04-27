@@ -7,15 +7,15 @@ class FinancialEntity {
     private $name_entity;
     private $phone_entity;
     private $address_entity;
-    private $logo_entity;
+    /* private $logo_entity; */
 
-    public function __construct($id, $name, $phone, $address, $logo)
+    public function __construct($id, $name, $phone, $address/* , $logo */)
     {
         $this->id_entity = $id;
         $this->name_entity = $name;
         $this->phone_entity = $phone;
         $this->address_entity = $address;
-        $this->logo_entity = $logo;
+        /* $this->logo_entity = $logo; */
     }
 
     public function getIdEntity() {
@@ -34,8 +34,8 @@ class FinancialEntity {
         return $this->address_entity;
     }
 
-    public function getLogoEntity() {
+    /* public function getLogoEntity() {
         return $this->logo_entity;
-    }
+    } */
 }
 ?>

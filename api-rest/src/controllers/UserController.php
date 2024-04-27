@@ -16,9 +16,9 @@ class UserController {
         return $this->dbJsonResponse->loginUser($email, $password);
     }
 
-    public function registerUser($user) {
+    public function registerUser($user, $headers) {
 
-        return $this->dbJsonResponse->registerUser($user);
+        return $this->dbJsonResponse->registerUser($user, $headers);
     }
 
 }

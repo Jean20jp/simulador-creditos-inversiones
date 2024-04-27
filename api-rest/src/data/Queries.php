@@ -38,8 +38,7 @@ class Queries {
         $query = "INSERT INTO financial_entity
                     SET name_entity = :nameent,
                         phone_entity = :phone,
-                        address_entity = :addressent,
-                        logo_entity = :logo";
+                        address_entity = :addressent";
         return $query;
     }
 

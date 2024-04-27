@@ -55,12 +55,23 @@ class DatabaseJsonResponse
                     "status" => 'error'
                 );
             }
+        } else {
+            return array(
+                "message" => 'No existe usuario',
+                "status" => 'error'
+            ); 
         }
     }
 
     // Función para registrar usuario, recibe el modelo user
-    public function registerUser($user)
-    {
+    public function registerUser($user, $headers) {
+
+        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+            return array(
+                "error" =>  $this->validateToken($headers)["error"],
+                "status" => 'error'
+            );
+        }
 
         $query = $this->svDatabase->prepare($this->sqlQueries->queryRegisterUser());
 
@@ -183,8 +194,8 @@ class DatabaseJsonResponse
         ];
 
         $result = $query->execute([":nameent" => $financialEntity->getNameEntity(),
-            ":phone" => $financialEntity->getPhoneEntity(), ":addressent" => $financialEntity->getAddressEntity(),
-            ":logo" => base64_decode($financialEntity->getLogoEntity())
+            ":phone" => $financialEntity->getPhoneEntity(), ":addressent" => $financialEntity->getAddressEntity()
+           /*  ":logo" => base64_decode($financialEntity->getLogoEntity()) */
         ]);
 
         // Si el resultado es satisfactorio modifica el array de respuesta por mensaje satisfactorio
@@ -198,14 +209,7 @@ class DatabaseJsonResponse
         return $array;
     }
 
-    public function getFinancialEntities($headers) {
-
-        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
-            return array(
-                "error" =>  $this->validateToken($headers)["error"],
-                "status" => 'error'
-            );
-        }
+    public function getFinancialEntities() {
 
         $query = $this->svDatabase->prepare($this->sqlQueries->queryGetFinancialEntities());
         $query->execute();
@@ -217,15 +221,15 @@ class DatabaseJsonResponse
                 "id" => $row['id_entity'],
                 "name" => $row['name_entity'],
                 "phone" => $row['phone_entity'],
-                "address" => $row['address_entity'],
-                "logo" => base64_encode($row['logo_entity'])
+                "address" => $row['address_entity']
+                //"logo" => base64_encode($row['logo_entity'])
             ];
         }
 
         return array(
             "status" => 'OK',
-            "total_entities" => $query->rowCount(),
-            "entities" => $entities            
+            "entities" => $entities,
+            "total_entities" => $query->rowCount()
         );
     }
 

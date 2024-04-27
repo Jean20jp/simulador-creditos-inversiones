@@ -16,9 +16,9 @@ class FinancialEntityController {
         return $this->dbJsonResponse->insertFinancialEntity($financialEntity, $headers); 
     }
 
-    public function getFinancialEntities($headers) {
+    public function getFinancialEntities() {
 
-        return $this->dbJsonResponse->getFinancialEntities($headers);
+        return $this->dbJsonResponse->getFinancialEntities();
     }
 }
 ?>
