@@ -34,8 +34,7 @@
                                 <h4>Iniciar Sesión</h4>
                                 <img class="photoLogin" src="../assets/profile.png" alt="photo login">
                                 <div class="form-group">
-                                    <input name="emailUser" class="form-style" placeholder="Ingrese su correo electrónico" id="emailUser"
-                                    type="email">
+                                    <input name="emailUser" class="form-style" placeholder="Ingrese su correo electrónico" id="emailUser" type="email" autocomplete="email">
                                     <i class="input-icon uil uil-user"></i>
                                 </div>	
                                 <div class="form-group mt-2">
@@ -43,7 +42,7 @@
                                     type="password">
                                     <i class="input-icon uil uil-lock"></i>
                                 </div>
-                                <a href="#" class="btn mt-4">Ingresar</a>
+                                <a href="#" onclick="iniciarSesion()" class="btn mt-4">Ingresar</a>
                                 <a href="../index.html" class="btn mt-4">Cancelar</a>
                               </div>
                           </div>
@@ -52,6 +51,45 @@
         </div>
         </div>
         
+        <script>
+            async function iniciarSesion() {
+
+            const credentials = {
+                email: document.getElementById('emailUser').value,
+                password: document.getElementById('passwUser').value
+            };
+
+            const cadenaJsonCredentials = JSON.stringify(credentials);
+
+            fetch('http://localhost/simuladorCredInver-apirest/api-rest/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: cadenaJsonCredentials
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status == 'OK') {
+                    saveToken(data.token)
+                    window.location.href = "../index.html";
+                } else {
+                    window.alert("Credenciales incorrectas")
+                }       
+            })
+            .catch(error => {
+                console.error('Error del servidor', error);
+            });
+            }
+
+            function saveToken(token) {
+            localStorage.setItem('token', token);
+            }
+
+            function getToken() {
+            return localStorage.getItem('token');
+            }
+        </script>
         
     </body>
 </html>

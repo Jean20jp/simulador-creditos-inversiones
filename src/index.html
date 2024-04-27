@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Simulador de Crédito/Inversión </title>
+		<link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
         <link rel="stylesheet" href="styles/style.css">
     </head>
 
-    <body>
+    <body style="overflow: scroll;">
 		<nav class="menu__wrapper">
             <div class="logo__wrapper">
                 <a
@@ -22,36 +23,50 @@
                     Dashboard
                 </a>
             </div>
-            
-			<a href="views/login.html" class="btn mt-4">Iniciar Sesión</a>
-            
+			<a id="btnIniciarSesion" href="views/login.html" class="btn mt-4" style="width: 150px; margin-right: 20px;">Iniciar Sesión</a>  
+			<a id="btnCerrarSesion" href="javascript:void(0)" onclick="logOut()" class="btn mt-4" style="width: 150px; margin-right: 20px">Cerrar Sesión</a>
         </nav>
         
 		<div style="height: 7rem;"></div>
 
-		<div class="container">       
-			<article class="card_entity">
-				<div class='background' style="display: flex; justify-content: center; align-items: center;">
-					<img src="assets/profile.png" alt="profile" style="max-width: 160px; max-height: 160px;">
-				</div>
+		<div class="container">
+			<article id="btnAddEntity" class="card_entity">
 				<div class='content'>
-					<h2>Nombre de la Entidad Financiera</h2>
-					<p>Numero de telefono</p>
-					<p>Direccion</p>
-							
-					<a href="views/entity_view.html" class="btn mt-4">Ingresar</a>
-					<a id="editEntity" href="#" class="btn mt-4" style="margin-top: 8px;">Editar</a>
-				</div>
-			</article>
-			<article class="card_entity">
-				<div class='content'>
-					<img id="icon_add" style="height: 64px; width: 64px; display: block; margin: 0 auto" src="assets/add.svg" alt="icon add">
+					<button onclick="toggleModalAddEntity()" type="button" style="background-color: #074173; border: 0px;">
+						<img style="height: 64px; width: 64px; display: block; margin: 0 auto" src="assets/add.svg" alt="icon add">
+					</button>
 				</div>
 			</article>
 		</div>
 
+		<div class="modal-background" onclick="toggleModalAddEntity()"></div>
+		<div class="modal" id="addEntity">
+			<h2>Registro nueva entidad financiera</h2>
+			
+				<h4 style="color: #074173;">Subir logo de la entidad financiera</h4>
+				<div class="dropzone-area" style="margin-bottom: 10px;">
+					<p>Haga clic para cargar el logo.</p>
+					<input type="file" required id="upload-file" name="uploaded-file">
+					<p class="message">Archivo no seleccionado</p>
+				</div>
+				<div class="form-group">
+					<input name="nameEntity" class="form-style" placeholder="Nombre de la entidad financiera" id="nameEntity" type="text" style="margin-bottom: 10px;">
+					<i class="input-icon uil uil-pen"></i>
+				</div>
+				<div class="form-group">
+					<input name="telefEntity" class="form-style" placeholder="Teléfono de la entidad financiera" id="telefEntity" type="tel" style="margin-bottom: 10px;">
+					<i class="input-icon uil uil-phone"></i>
+				</div>
+				<div class="form-group">
+					<input name="addressEntity" class="form-style" placeholder="Dirección de la entidad financiera" id="addressEntity" type="text">
+					<i class="input-icon uil uil-map-marker"></i>
+				</div>
+
+				<div class="dropzone-actions">
+					<a id="register-entity" onclick="registerEntity()" href="javascript:void(0)" class="btn mt-4">Guardar</a>
+					<a id="cancel-reg-entity" onclick="toggleModalAddEntity()" class="btn mt-4">Cancelar</a>
+				</div>
+		</div>
+		<script src="scripts/main.js"></script>
     </body>
-</html>
-	
-	</body>
 </html>
