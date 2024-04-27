@@ -70,6 +70,18 @@ function logOut() {
   window.location.href = "index.html";
 }
 
+function hrefLogIn() {
+  window.location.href = "views/login.html";
+}
+
+function hrefAddUser() {
+  window.location.href = "views/register_user.html";
+}
+
+function hrefGtnEntities() {
+  window.location.href = "views/gtn_entities.html"
+}
+
 async function registerEntity() {
 
   const token = localStorage.getItem('token');
@@ -134,10 +146,14 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("btnIniciarSesion").style.display = "none"; 
       document.getElementById("btnCerrarSesion").style.display = "inline-block"; 
       document.getElementById("btnAddEntity").style.display = "inline-block";
+      document.getElementById("btnGtnEntities").style.display = "inline-block";
+      document.getElementById("btnAddUser").style.display = "inline-block";
     } else {
       document.getElementById("btnIniciarSesion").style.display = "inline-block";
       document.getElementById("btnCerrarSesion").style.display = "none";
       document.getElementById("btnAddEntity").style.display = "none";
+      document.getElementById("btnGtnEntities").style.display = "none";
+      document.getElementById("btnAddUser").style.display = "none";
     }
   }
 

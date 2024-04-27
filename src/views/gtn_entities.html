@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Simulador de Crédito/Inversión </title>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
+        <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+        <nav class="menu__wrapper">
+            <div class="logo__wrapper">
+                <a
+                    href="../index.html"
+                    title="Logo"
+                    class="logo"
+                >
+                <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true">
+                    <image href="../assets/bank.svg" width="16" height="16" />
+                </svg>
+                </a>
+                <a href="../index.html" class="page__title">
+                    Dashboard
+                </a>
+            </div>
+            <div class="action-buttons"> 
+
+				<button id="btnGtnEntities" onclick="hrefGtnEntities()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/entity.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+				
+				<button id="btnAddUser" onclick="hrefAddUser()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/add-user.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+
+                <button id="btnCerrarSesion" onclick="logOut()" class="action-button" style="margin-right: 20px;">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/signout.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+       
+        <script>
+            function logOut() {
+                localStorage.removeItem('token');
+                window.location.href = "../index.html";
+            }
+
+            function hrefAddUser() {
+                window.location.href = "register_user.html"
+            }
+
+            function hrefGtnEntities() {
+                window.location.href = "gtn_entities.html"
+            }
+        </script>
+    </body>
+</html>

@@ -23,8 +23,31 @@
                     Dashboard
                 </a>
             </div>
-			<a id="btnIniciarSesion" href="views/login.html" class="btn mt-4" style="width: 150px; margin-right: 20px;">Iniciar Sesión</a>  
-			<a id="btnCerrarSesion" href="javascript:void(0)" onclick="logOut()" class="btn mt-4" style="width: 150px; margin-right: 20px">Cerrar Sesión</a>
+			<div class="action-buttons"> 
+
+				<button id="btnGtnEntities" onclick="hrefGtnEntities()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="assets/entity.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+				
+				<button id="btnAddUser" onclick="hrefAddUser()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="assets/add-user.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+
+                <button id="btnCerrarSesion" onclick="logOut()" class="action-button" style="margin-right: 20px;">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="assets/signout.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+				<button id="btnIniciarSesion" onclick="hrefLogIn()" class="action-button" style="margin-right: 20px;">
+					<svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+						<image class="img_nav" href="assets/signin.svg" width="24" height="24"/>
+					</svg>
+				</button> 
+            </div>
         </nav>
         
 		<div style="height: 7rem;"></div>

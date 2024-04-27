@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Simulador de Crédito/Inversión </title>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
+        <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+        <nav class="menu__wrapper">
+            <div class="logo__wrapper">
+                <a
+                    href="../index.html"
+                    title="Logo"
+                    class="logo"
+                >
+                <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true">
+                    <image href="../assets/bank.svg" width="16" height="16" />
+                </svg>
+                </a>
+                <a href="../index.html" class="page__title">
+                    Dashboard
+                </a>
+            </div>
+            <div class="action-buttons"> 
+				<button id="btnGtnEntities" onclick="hrefGtnEntities()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/entity.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+				
+				<button id="btnAddUser" onclick="hrefAddUser()" class="action-button">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/add-user.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+
+                <button id="btnCerrarSesion" onclick="logOut()" class="action-button" style="margin-right: 20px;">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+                        <image class="img_nav" href="../assets/signout.svg" width="24" height="24"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="col-12 text-center align-self-center py-5">
+            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <div class="card-3d-wrap mx-auto">
+                    <div class="card-front">
+                        <div class="center-wrap">
+                            <div class="section text-center">
+                                <h4 style="margin-bottom: 50px;">Registro de Usuario</h4>
+                                <div class="form-group mt-2">
+                                    <input name="nameUser" class="form-style" placeholder="Ingrese nombre del usuario" id="nameUser" type="text">
+                                    <i class="input-icon uil uil-pen"></i>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input name="lastnameUser" class="form-style" placeholder="Ingrese apellido del usuario" id="lastnameUser" type="text">
+                                    <i class="input-icon uil uil-pen"></i>
+                                </div>	
+                                <div class="form-group mt-2">
+                                    <input name="emailUser" class="form-style" placeholder="Ingrese su correo electrónico" id="emailUserReg" type="email">
+                                    <i class="input-icon uil uil-envelope"></i>
+                                </div>	
+                                <div class="form-group mt-2">
+                                    <input name="passwUser" class="form-style" placeholder="Ingrese su contraseña" id="passwUserReg"
+                                    type="password">
+                                    <i class="input-icon uil uil-lock"></i>
+                                </div>
+                                <a href="#" onclick="registerUser()" class="btn mt-4">Registrar</a>
+                                <a href="../index.html" class="btn mt-4">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        
+        <script>
+             async function registerUser() {
+
+                const nameUser = document.getElementById('nameUser').value;
+                const lastnameUser = document.getElementById('lastnameUser').value;
+                const emailUserReg = document.getElementById('emailUserReg').value;
+                const passwUserReg = document.getElementById('passwUserReg').value
+                
+                if (nameUser !== '' && lastnameUser !== '' && emailUserReg !== '' && passwUserReg !== '') {
+
+                    const token = localStorage.getItem('token');
+
+                    const dataUser = {
+                        id_rol: 1,
+                        name: nameUser,
+                        lastname: lastnameUser,
+                        email: emailUserReg,
+                        password: passwUserReg
+                    };
+
+                    fetch('http://localhost/simuladorCredInver-apirest/api-rest/registerUser', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(dataUser)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            window.alert("Usuario registrado correctamente")
+                            window.location.href = "../index.html";
+                        } else {
+                            window.alert("Credenciales incorrectas")
+                        }       
+                    })
+                    .catch(error => {
+                        console.error('Error del servidor', error);
+                    });
+                } else {
+                    window.alert("Se requiere todos los campos");
+                }
+            }
+
+            function logOut() {
+                localStorage.removeItem('token');
+                window.location.href = "../index.html";
+            }
+
+            function hrefAddUser() {
+                window.location.href = "register_user.html"
+            }
+
+            function hrefGtnEntities() {
+                window.location.href = "gtn_entities.html"
+            }
+           
+        </script>
+        
+    </body>
+</html>
