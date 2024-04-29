@@ -11,9 +11,9 @@ class TypeInvestmentController {
         $this->dbJsonResponse = new DatabaseJsonResponse();
     }
 
-    public function getTypesInvestments($headers) {
+    public function getTypesInvestments($id_entity) {
 
-        return $this->dbJsonResponse->getTypesInvestments($headers); 
+        return $this->dbJsonResponse->getTypesInvestments($id_entity); 
     }
 
     public function registerTypeInvestment($typeInvestment, $headers) {

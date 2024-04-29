@@ -44,7 +44,8 @@ class Queries {
 
     public function queryGetTypesCredits() {
         $query = "SELECT id_credit, id_entity_per, name_credit, rate_credit
-                    FROM type_credit";
+                    FROM type_credit
+                    WHERE id_entity_per = :idEnt";
         return $query;
     }
 
@@ -66,7 +67,8 @@ class Queries {
 
     public function queryGetTypesInvestments() {
         $query = "SELECT id_investment, id_entity_per, name_investment, rate_investment
-                    FROM type_investment";
+                    FROM type_investment
+                    WHERE id_entity_per = :idEnt";
         return $query;
     }
 }

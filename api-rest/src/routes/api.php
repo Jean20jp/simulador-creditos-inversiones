@@ -124,11 +124,11 @@ Flight::route('POST /registerTypeCredit', function() {
     }
 });
 
-Flight::route('GET /getTypesCredits', function() {
+Flight::route('POST /getTypesCredits', function() {
 
-    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+    $data = Flight::request()->data;
 
-    $response = getTypeCreditController()->getTypesCredits($headers); // Obtener respuesta de la capa de datos
+    $response = getTypeCreditController()->getTypesCredits($data['id_entity']); // Obtener respuesta de la capa de datos
 
     if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
         Flight::halt(FORBIDDEN, $response["error"]);
@@ -137,11 +137,11 @@ Flight::route('GET /getTypesCredits', function() {
     }
 });
 
-Flight::route('GET /getTypesInvestments', function() {
+Flight::route('POST /getTypesInvestments', function() {
 
-    $headers = apache_request_headers(); // Obtener encabezado con el token authorization
+    $data = Flight::request()->data;
 
-    $response = getTypeInvestmentController()->getTypesInvestments($headers); // Obtener respuesta de la capa de datos
+    $response = getTypeInvestmentController()->getTypesInvestments($data['id_entity']); // Obtener respuesta de la capa de datos
 
     if ($response["status"] == 'error' ) {  // Si el estado es error muestra el mensaje del error que se produjo 
         Flight::halt(FORBIDDEN, $response["error"]);

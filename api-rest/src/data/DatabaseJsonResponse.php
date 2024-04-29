@@ -263,34 +263,36 @@ class DatabaseJsonResponse
         return $array;
     }
 
-    public function getTypesCredits($headers) {
-
-        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
+    public function getTypesCredits($id_entity) {
+        try {
+            $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesCredits());
+            $query->execute([":idEnt" => $id_entity]);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+            $typesCredits = [];
+            foreach ($data as $row) {
+                $typesCredits[] = [
+                    "id_cred" => $row['id_credit'],
+                    "id_ent_per" => $row['id_entity_per'],
+                    "name_cred" => $row['name_credit'],
+                    "rate_cred" => $row['rate_credit']
+                ];
+            }
+    
             return array(
-                "error" =>  $this->validateToken($headers)["error"],
-                "status" => 'error'
+                "total_credits" => count($typesCredits),
+                "types_credits" => $typesCredits,
+                "status" => 'OK'
+            );
+        } catch (PDOException $e) {
+            // Manejo de errores
+            return array(
+                "total_credits" => 0,
+                "types_credits" => [],
+                "status" => 'Error: ' . $e->getMessage()
             );
         }
-
-        $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesCredits());
-        $query->execute();
-        $data = $query->fetchAll();
-        $typesCredits = [];
-        foreach ($data as $row) {
-            $typesCredits[] = [
-                "id_cred" => $row['id_credit'],
-                "id_ent_per" => $row['id_entity_per'],
-                "name_cred" => $row['name_credit'],
-                "rate_cred" => $row['rate_credit']
-            ];
-        }
-
-        return array(
-            "total_credits" => $query->rowCount(),
-            "types_credits" => $typesCredits,
-            "status" => 'OK'
-        );
-    }
+    }    
 
     public function insertTypeInvestment($typeInvest, $headers) {
 
@@ -323,33 +325,34 @@ class DatabaseJsonResponse
         return $array;
     }
 
-    public function getTypesInvestments($headers) {
+    public function getTypesInvestments($id_entity) {
+        try {
+            $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesInvestments());
+            $query->execute([":idEnt" => $id_entity]);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            $typesInvestments = [];
+            foreach ($data as $row) {
+                $typesInvestments[] = [
+                    "id_invest" => $row['id_investment'],
+                    "id_ent_per" => $row['id_entity_per'],
+                    "name_invest" => $row['name_investment'],
+                    "rate_invest" => $row['rate_investment']
+                ];
+            }
 
-        if ($this->validateToken($headers)["status"] == "error") { // Validar token recibido (headers) para obtener data
             return array(
-                "error" =>  $this->validateToken($headers)["error"],
-                "status" => 'error'
+                "total_investments" => $query->rowCount(),
+                "types_investments" => $typesInvestments,
+                "status" => 'OK'
             );
-        }
 
-        $query = $this->svDatabase->prepare($this->sqlQueries->queryGetTypesInvestments());
-        $query->execute();
-        $data = $query->fetchAll();
-        $typesInvestments = [];
-        foreach ($data as $row) {
-            $typesInvestments[] = [
-                "id_invest" => $row['id_investment'],
-                "id_ent_per" => $row['id_entity_per'],
-                "name_invest" => $row['name_investment'],
-                "rate_invest" => $row['rate_investment']
-            ];
-        }
-
-        return array(
-            "total_investments" => $query->rowCount(),
-            "types_investments" => $typesInvestments,
-            "status" => 'OK'
-        );
+        } catch(PDOException $e) {
+            return array(
+                "total_investments" => 0,
+                "types_investments" => [],
+                "status" => 'Error: ' . $e->getMessage()
+            );
+        }        
     }
 }
 

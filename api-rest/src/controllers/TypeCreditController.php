@@ -11,9 +11,9 @@ class TypeCreditController {
         $this->dbJsonResponse = new DatabaseJsonResponse();
     }
 
-    public function getTypesCredits($headers) {
+    public function getTypesCredits($id_entity) {
 
-        return $this->dbJsonResponse->getTypesCredits($headers); 
+        return $this->dbJsonResponse->getTypesCredits($id_entity); 
     }
 
     public function registerTypeCredit($typeCredit, $headers) {
