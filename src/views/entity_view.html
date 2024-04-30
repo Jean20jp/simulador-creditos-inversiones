@@ -6,31 +6,17 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
     <link rel="stylesheet" href="../styles/style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+	
+
+
 
 </head>
+
+
+
 <header>
-	<nav class="menu__wrapper">
-		<div class="logo__wrapper">
-			<a
-				href="../index.html"
-				title="Logo"
-				class="logo"
-			>
-			<svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true">
-				<image href="../assets/bank.svg" width="16" height="16" />
-			</svg>
-			</a>
-			<a href="../index.html" class="page__title">
-				Dashboard
-			</a>
-		</div>
-	</nav>
-</header>
-
-<div style="height: 1rem;"></div>
-
-<body style="overflow-y: scroll;">
-
 	<nav class="menu__wrapper">
 		<div class="logo__wrapper">
 			<a
@@ -71,7 +57,12 @@
 				</svg>
 			</button> 
 		</div>
-	</nav>	
+	</nav>
+</header>
+
+<div style="height: 3rem;"></div>
+
+<body style="overflow-y: scroll;">	
 
 <div class="container_main">
 
@@ -124,7 +115,7 @@
 											</div>	
 											<div class="form-group mt-2">
 												<select 
-												name="frecInv" class="form-style" id="frecInv">
+												name="frecCre" class="form-style" id="frecCre">
 													<option value="" disabled selected>Frecuencia de Pago</option>
 													<option value="mensual">Mensual</option>
 													<option value="bimensual">Bimensual</option>
@@ -151,8 +142,8 @@
 												</select>
 												<i class="input-icon uil uil-calculator"></i>
 											</div>
-											<a style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
-											<a style="padding-right: 44.5px; padding-left: 44.5px; margin-left: 5px;" href="#" class="btn mt-4">Limpiar</a>
+											<a  id="btnGenerar"style="margin-right: 5px;" class="btn mt-4">Generar</a>
+											<button type="reset" class="btn mt-4" id="btnLimpiar">Limpiar</button>
 				      					</div>
 			      					</div>
 			      				</div>
@@ -195,7 +186,7 @@
 											</div>	
 											<div class="form-group mt-2">
 												<select 
-												name="frecInv" class="form-style" id="frecInvest">
+												name="frecInv" class="form-style" id="frecInv">
 													<option value="" disabled selected>Frecuencia</option>
 													<option value="dias">Días</option>
 													<option value="meses">Meses</option>
@@ -218,8 +209,8 @@
 												</select>
 												<i class="input-icon uil uil-calculator"></i>
 											</div>
-											<a style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
-											<a style="padding-right: 44.5px; padding-left: 44.5px; margin-left: 5px;" href="#" class="btn mt-4">Limpiar</a>
+											<a  id="btnGenerarInversion style="margin-right: 5px; href="#" class="btn mt-4">Generar</a>
+											<button type="reset" class="btn mt-4" id="btnLimpiar2">Limpiar</button>
 			      					</div>
 			      				</div>
 			      			</div>
@@ -228,6 +219,20 @@
 		      	</div>
 	      	</div>
 	    </div>
+	</div>
+	<div class="container_main">
+	
+		<div class="row justify-content-center mt-5">
+			<div class="col-md-10">
+				
+					<div id="tablaDetalleContainer" class="tabla-scroll"></div>
+			</div>
+		</div>
+	</div>
+	<div class="card text-center">
+		<div id="tarjetaInversionContainer" class="card">
+		
+		</div>	
 	</div>
 </div>
 
@@ -322,6 +327,33 @@ async function getTypeInvestments(id_entity) {
     }
 }
 
+async function getCobrosIndirectos(id_entity) {
+    if (id_entity != 0) {
+        const id = { "id_entity": id_entity };
+
+        return fetch('http://localhost/simuladorCredInver-apirest/api-rest/getCobrosIndirectos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(id)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == 'OK') {
+                return data.cobros_indirect;
+            } else {
+                console.error('La respuesta de la API no fue exitosa:', data.status);
+                return [];
+            }
+        })
+        .catch(error => {
+            console.error('Error del servidor:', error);
+            return [];
+        });
+    } else {
+        return [];
+    }
+}
+
 function loadRateTypeCredit(rate) {
 	const inputTasaCred = document.getElementById("tasaCred");
 	inputTasaCred.value = rate;
@@ -332,11 +364,23 @@ function loadRateTypeInvest(rate) {
 	inputTasaInvest.value = rate;
 }
 
+function loadMontoCobroIndCrec(monto) {
+	const inputMontoCobrInd = document.getElementById("montoCobrIndCred");
+	inputMontoCobrInd.value = monto;
+}
+
+function loadMontoCobroIndInvest(monto) {
+	const inputMontoCobrInd = document.getElementById("montoCobrIndInvest");
+	inputMontoCobrInd.value = monto;
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get('id');
 
 const selectTypeCred = document.getElementById("typeCred");
 const selectTypeInvest = document.getElementById("typeInvest")
+const selectCobrIndCred = document.getElementById("cobroIndirCred")
+const selectCobrIndInvest = document.getElementById("cobroIndirInvest")
 
 getTypeCredits(entityId)
     .then(listTypeCredits => {
@@ -376,6 +420,46 @@ selectTypeInvest.addEventListener("change", function() {
     const selectedOption = this.options[this.selectedIndex];
     const rate = selectedOption.dataset.rateInv;
     loadRateTypeInvest(rate);
+});
+
+getCobrosIndirectos(entityId)
+.then(listCobrosInd => {
+			listCobrosInd.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_cobro; 
+            option.textContent = opcion.name_cobro;
+			option.dataset.montoCobro = opcion.monto_cobro;
+            selectCobrIndCred.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectCobrIndCred.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const monto = selectedOption.dataset.montoCobro;
+    loadMontoCobroIndCrec(monto);
+});
+
+getCobrosIndirectos(entityId)
+.then(listCobrosInd => {
+			listCobrosInd.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_cobro; 
+            option.textContent = opcion.name_cobro;
+			option.dataset.montoCobro = opcion.monto_cobro;
+            selectCobrIndInvest.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectCobrIndInvest.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const monto = selectedOption.dataset.montoCobro;
+    loadMontoCobroIndInvest(monto);
 });
 
 </script>
