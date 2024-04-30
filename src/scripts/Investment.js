@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Función para generar la tarjeta de resultados de inversión según el sistema de amortización seleccionado
 function generarTarjetaInversion() {
     // Obtener los valores del formulario
-    let montoInversion = parseFloat(document.getElementById('montoInv').value);
+    let montoInversion = parseFloat(document.getElementById('montoInv').value); // Corregido: montoInv
     let frecuenciaInversion = document.getElementById('frecInv').value;
     let plazoInversion = parseInt(document.getElementById('plazoInv').value);
     let tipoAmortizacionInversion = document.getElementById('sistAmortInv').value;
@@ -48,7 +48,7 @@ function generarTarjetaInversion() {
                 <h5 class="card-title">Resultados de Inversión</h5>
                 <p class="card-text">Rendimiento Neto: ${rendimientoNeto.toFixed(2)}</p>
                 <p class="card-text">Capital: ${capital.toFixed(2)}</p>
-                <p class="card-text">Tasa de Interés: ${(interes * 100).toFixed(2)}%</p>
+                <p class="card-text">Interés: ${(interes * 100).toFixed(2)}%</p>
             </div>
         </div>
     `;
@@ -57,10 +57,10 @@ function generarTarjetaInversion() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('btnLimpiar').addEventListener('click', function() {
+    document.getElementById('btnLimpiar').addEventListener('click', function () {
         location.reload();
     });
-    document.getElementById('btnLimpiar2').addEventListener('click', function() {
+    document.getElementById('btnLimpiar2').addEventListener('click', function () {
         location.reload();
     });
 });

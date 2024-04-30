@@ -6,9 +6,8 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
     <link rel="stylesheet" href="../styles/style.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 
 
 
@@ -94,26 +93,26 @@
 											</div>
 
 											<div  style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
-												<div class="form-group">
+												<div class="form-group mt-2">
 													<select class="form-style" id="cobroIndirCred">
 														<option value="" disabled selected>Cobro Indirecto</option>
 														
 													</select>
 													<i class="input-icon uil uil-dollar-alt"></i>
 												</div>
-												<div class="form-group">
+												<div class="form-group mt-2">
 													<input style="padding-left: 25px;" class="form-style" placeholder="Monto"
 													 id="montoCobrIndCred" autocomplete="off" disabled type="number" step="0.1" min="0">
 												</div>
 
 											</div>
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<input name="montoSolic" class="form-style" placeholder="Monto a Solicitar" id="montoSolic"
 												type="number" step="500"
 												min="0">
 												<i class="input-icon uil uil-money-bill"></i>
 											</div>	
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<select 
 												name="frecCre" class="form-style" id="frecCre">
 													<option value="" disabled selected>Frecuencia de Pago</option>
@@ -127,13 +126,13 @@
 												</select>
 												<i class="input-icon uil uil-calendar-alt"></i>
 											</div>
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<input name="numCuot" class="form-style" placeholder="# Cuotas" id="numCout" autocomplete="off"
 												type="number" step="1" min="0">
 												<i class="input-icon uil uil-coins"></i>
 											</div>
 											
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<select 
 												name="sistAmort" class="form-style" id="sistAmortCred">
 													<option value="" disabled selected>Sistema de Amortización</option>
@@ -142,7 +141,7 @@
 												</select>
 												<i class="input-icon uil uil-calculator"></i>
 											</div>
-											<a href="#" id="btnGenerar"style="margin-right: 5px;" class="btn mt-4">Generar</a>
+											<a  id="btnGenerar"style="margin-right: 5px;" class="btn mt-4">Generar</a>
 											<button type="reset" class="btn mt-4" id="btnLimpiar">Limpiar</button>
 				      					</div>
 			      					</div>
@@ -165,26 +164,25 @@
 											</div>
 
 											<div  style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
-												<div class="form-group">
+												<div class="form-group mt-2">
 													<select class="form-style" id="cobroIndirInvest">
 														<option value="" disabled selected>Cobro Indirecto</option>
 														
 													</select>
 													<i class="input-icon uil uil-dollar-alt"></i>
 												</div>
-												<div class="form-group">
+												<div class="form-group mt-2">
 													<input style="padding-left: 25px;" class="form-style" placeholder="Monto"
 													 id="montoCobrIndInvest" autocomplete="off" disabled type="number" step="0.1" min="0">
 												</div>
 
 											</div>
-											<div class="form-group">
-												<input name="montoInv" class="form-style" placeholder="Monto a Invertir" id="montoInvest"
-												type="number" step="500"
-												min="0">
+											<div class="form-group mt-2">
+												<input name="montoInv" class="form-style" placeholder="Monto a Invertir" id="montoInv" type="number" step="500" min="0">
+												
 												<i class="input-icon uil uil-money-bill"></i>
 											</div>	
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<select 
 												name="frecInv" class="form-style" id="frecInv">
 													<option value="" disabled selected>Frecuencia</option>
@@ -194,23 +192,22 @@
 												</select>
 												<i class="input-icon uil uil-calendar-alt"></i>
 											</div>
-											<div class="form-group">
-												<input name="plazoInv" class="form-style" placeholder="Plazo" id="plazoInvest" autocomplete="off"
+											<div class="form-group mt-2">
+												<input name="plazoInv" class="form-style" placeholder="Plazo" id="plazoInv" autocomplete="off"
 												type="number" step="1"
 												min="0">
 												<i class="input-icon uil uil-clock"></i>
 											</div>
-											<div class="form-group">
+											<div class="form-group mt-2">
 												<select 
-												name="sistAmortInv" class="form-style" id="sistAmortInvest">
+												name="sistAmortInv" class="form-style" id="sistAmortInv">
 													<option value="" disabled selected>Sistema de Amortización</option>
 													<option value="aleman">Alemán</option>
 													<option value="frances">Francés</option>
 												</select>
 												<i class="input-icon uil uil-calculator"></i>
 											</div>
-											<a id="btnGenerarInversion" style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
-
+											<a  id="btnGenerarInversion" style="margin-right: 5px;" href="#" class="btn mt-4">Generar</a>
 											<button type="reset" class="btn mt-4" id="btnLimpiar2">Limpiar</button>
 			      					</div>
 			      				</div>
@@ -230,11 +227,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="card text-center">
-		<div id="tarjetaInversionContainer" class="card">
-		
-		</div>	
-	</div>
+	
+</div>
+<div class="card text-center">
+	<div id="tarjetaInversionContainer" class="card">
+	
+	</div>	
 </div>
 
 <script>

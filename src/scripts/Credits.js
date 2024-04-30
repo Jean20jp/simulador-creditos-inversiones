@@ -103,27 +103,15 @@ function generarTabla() {
 function imprimirPDF() {
     alert('Generando PDF.'); // Agregar este alert para verificar la ejecución de la función
 
-    // Obtener el contenido HTML de la tabla de detalle de cuotas según el tipo de amortización
-    let tablaHTML = document.getElementById('tablaDetalleContainer').innerHTML;
-
-    // Crear un objeto Blob a partir del contenido HTML de la tabla
-    const blob = new Blob([tablaHTML], { type: 'application/pdf' });
-
-    // Crear un objeto URL a partir del Blob
-    const url = URL.createObjectURL(blob);
-
-    // Crear un elemento <a> para descargar el archivo PDF
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'tabla_amortizacion.pdf'; // Nombre del archivo PDF
-
-    // Agregar el elemento <a> al documento y simular el clic para iniciar la descarga
-    document.body.appendChild(link);
-    link.click();
-
-    // Eliminar el elemento <a> del documento después de la descarga
-    document.body.removeChild(link);
+    // Capturar la imagen de la tabla de detalle de cuotas
+    html2canvas(document.getElementById('tablaDetalleContainer')).then(canvas => {
+        // Crear un objeto jspdf para guardar la imagen como PDF
+        let pdf = new jsPDF('p', 'mm', 'a4'); // Crea un documento PDF en formato A4
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+        pdf.save('tabla_amortizacion.pdf'); // Nombre del archivo PDF
+    });
 }
+
 
 
 
