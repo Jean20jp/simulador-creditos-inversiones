@@ -29,7 +29,49 @@
 
 <div style="height: 1rem;"></div>
 
-<body>
+<body style="overflow-y: scroll;">
+
+	<nav class="menu__wrapper">
+		<div class="logo__wrapper">
+			<a
+				href="../index.html"
+				title="Logo"
+				class="logo"
+			>
+			<svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true">
+				<image href="../assets/bank.svg" width="16" height="16" />
+			</svg>
+			</a>
+			<a href="../index.html" class="page__title">
+				Dashboard
+			</a>
+		</div>
+		<div class="action-buttons"> 
+
+			<button id="btnGtnEntities" onclick="hrefGtnEntities()" class="action-button">
+				<svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+					<image class="img_nav" href="../assets/entity.svg" width="24" height="24"/>
+				</svg>
+			</button>
+			
+			<button id="btnAddUser" onclick="hrefAddUser()" class="action-button">
+				<svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+					<image class="img_nav" href="../assets/add-user.svg" width="24" height="24"/>
+				</svg>
+			</button>
+
+			<button id="btnCerrarSesion" onclick="logOut()" class="action-button" style="margin-right: 20px;">
+				<svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+					<image class="img_nav" href="../assets/signout.svg" width="24" height="24"/>
+				</svg>
+			</button>
+			<button id="btnIniciarSesion" onclick="hrefLogIn()" class="action-button" style="margin-right: 20px;">
+				<svg aria-hidden="true" height="24" viewBox="0 0 22 22" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+					<image class="img_nav" href="../assets/signin.svg" width="24" height="24"/>
+				</svg>
+			</button> 
+		</div>
+	</nav>	
 
 <div class="container_main">
 
@@ -47,7 +89,34 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Crédito</h4>
-											<div class="form-group">
+											<div style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
+												<div class="form-group">
+													<select class="form-style" id="typeCred">
+														<option value="" disabled selected>Tipo de Crédito</option>
+														
+													</select>
+													<i class="input-icon uil uil-bill"></i>
+												</div>
+												<div class="form-group">
+													<input style="padding-left: 25px;" class="form-style" placeholder="Tasa de Interés (%)" id="tasaCred" autocomplete="off" disabled type="number" step="0.1" min="0">
+												</div>
+											</div>
+
+											<div  style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
+												<div class="form-group mt-2">
+													<select class="form-style" id="cobroIndirCred">
+														<option value="" disabled selected>Cobro Indirecto</option>
+														
+													</select>
+													<i class="input-icon uil uil-dollar-alt"></i>
+												</div>
+												<div class="form-group mt-2">
+													<input style="padding-left: 25px;" class="form-style" placeholder="Monto"
+													 id="montoCobrIndCred" autocomplete="off" disabled type="number" step="0.1" min="0">
+												</div>
+
+											</div>
+											<div class="form-group mt-2">
 												<input name="montoSolic" class="form-style" placeholder="Monto a Solicitar" id="montoSolic"
 												type="number" step="500"
 												min="0">
@@ -69,19 +138,13 @@
 											</div>
 											<div class="form-group mt-2">
 												<input name="numCuot" class="form-style" placeholder="# Cuotas" id="numCout" autocomplete="off"
-												type="number" step="1"
-												min="0">
+												type="number" step="1" min="0">
 												<i class="input-icon uil uil-coins"></i>
 											</div>
-											<div class="form-group mt-2">
-												<input name="tasaCred" class="form-style" placeholder="Tasa de Interés (%)" id="tasaCred" autocomplete="off"
-												type="number" step="0.1"
-												min="0">
-												<i class="input-icon uil uil-chart-line"></i>
-											</div>
+											
 											<div class="form-group mt-2">
 												<select 
-												name="sistAmort" class="form-style" id="sistAmort">
+												name="sistAmort" class="form-style" id="sistAmortCred">
 													<option value="" disabled selected>Sistema de Amortización</option>
 													<option value="aleman">Alemán</option>
 													<option value="frances">Francés</option>
@@ -97,15 +160,42 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Inversión</h4>
-											<div class="form-group">
-												<input name="montoInv" class="form-style" placeholder="Monto a Invertir" id="montoInv"
+											<div style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
+												<div class="form-group">
+													<select class="form-style" id="typeInvest">
+														<option value="" disabled selected>Tipo de Inversión</option>
+														
+													</select>
+													<i class="input-icon uil uil-bill"></i>
+												</div>
+												<div class="form-group">
+													<input style="padding-left: 25px;" class="form-style" placeholder="Tasa de Interés (%)" id="tasaInvest" autocomplete="off" disabled type="number" step="0.1" min="0">
+												</div>
+											</div>
+
+											<div  style="display: grid; grid-template-columns: 20fr 10fr; gap: 10px;">
+												<div class="form-group mt-2">
+													<select class="form-style" id="cobroIndirInvest">
+														<option value="" disabled selected>Cobro Indirecto</option>
+														
+													</select>
+													<i class="input-icon uil uil-dollar-alt"></i>
+												</div>
+												<div class="form-group mt-2">
+													<input style="padding-left: 25px;" class="form-style" placeholder="Monto"
+													 id="montoCobrIndInvest" autocomplete="off" disabled type="number" step="0.1" min="0">
+												</div>
+
+											</div>
+											<div class="form-group mt-2">
+												<input name="montoInv" class="form-style" placeholder="Monto a Invertir" id="montoInvest"
 												type="number" step="500"
 												min="0">
 												<i class="input-icon uil uil-money-bill"></i>
 											</div>	
 											<div class="form-group mt-2">
 												<select 
-												name="frecInv" class="form-style" id="frecInv">
+												name="frecInv" class="form-style" id="frecInvest">
 													<option value="" disabled selected>Frecuencia</option>
 													<option value="dias">Días</option>
 													<option value="meses">Meses</option>
@@ -114,20 +204,14 @@
 												<i class="input-icon uil uil-calendar-alt"></i>
 											</div>
 											<div class="form-group mt-2">
-												<input name="plazoInv" class="form-style" placeholder="Plazo" id="plazoInv" autocomplete="off"
+												<input name="plazoInv" class="form-style" placeholder="Plazo" id="plazoInvest" autocomplete="off"
 												type="number" step="1"
 												min="0">
 												<i class="input-icon uil uil-clock"></i>
 											</div>
 											<div class="form-group mt-2">
-												<input name="tasaInv" class="form-style" placeholder="Tasa de Interés (%)" id="tasaInv" autocomplete="off"
-												type="number" step="0.1"
-												min="0">
-												<i class="input-icon uil uil-chart-line"></i>
-											</div>
-											<div class="form-group mt-2">
 												<select 
-												name="sistAmortInv" class="form-style" id="sistAmortInv">
+												name="sistAmortInv" class="form-style" id="sistAmortInvest">
 													<option value="" disabled selected>Sistema de Amortización</option>
 													<option value="aleman">Alemán</option>
 													<option value="frances">Francés</option>
@@ -146,6 +230,157 @@
 	    </div>
 	</div>
 </div>
+
+<script>
+
+function logOut() {
+	localStorage.removeItem('token');
+	window.location.href = "../index.html";
+}
+
+function hrefAddUser() {
+	window.location.href = "register_user.html"
+}
+
+function hrefGtnEntities() {
+	window.location.href = "gtn_entities.html"
+}
+
+function hrefLogIn() {
+  window.location.href = "login.html";
+}
+
+let isAdmin = localStorage.getItem('token') ? true : false;
+
+function toggleEditButtonVisibility(isLoggedIn) {
+    if (isLoggedIn) {
+      document.getElementById("btnIniciarSesion").style.display = "none"; 
+      document.getElementById("btnCerrarSesion").style.display = "inline-block"; 
+      document.getElementById("btnGtnEntities").style.display = "inline-block";
+      document.getElementById("btnAddUser").style.display = "inline-block";
+    } else {
+      document.getElementById("btnIniciarSesion").style.display = "inline-block";
+      document.getElementById("btnCerrarSesion").style.display = "none";
+      document.getElementById("btnGtnEntities").style.display = "none";
+      document.getElementById("btnAddUser").style.display = "none";
+    }
+}
+
+toggleEditButtonVisibility(isAdmin);
+
+async function getTypeCredits(id_entity) {
+    if (id_entity != 0) {
+        const id = { "id_entity": id_entity };
+
+        return fetch('http://localhost/simuladorCredInver-apirest/api-rest/getTypesCredits', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(id)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == 'OK') {
+                return data.types_credits;
+            } else {
+                console.error('La respuesta de la API no fue exitosa:', data.status);
+                return [];
+            }
+        })
+        .catch(error => {
+            console.error('Error del servidor:', error);
+            return [];
+        });
+    } else {
+        return [];
+    }
+}
+
+async function getTypeInvestments(id_entity) {
+    if (id_entity != 0) {
+        const id = { "id_entity": id_entity };
+
+        return fetch('http://localhost/simuladorCredInver-apirest/api-rest/getTypesInvestments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(id)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == 'OK') {
+                return data.types_investments;
+            } else {
+                console.error('La respuesta de la API no fue exitosa:', data.status);
+                return [];
+            }
+        })
+        .catch(error => {
+            console.error('Error del servidor:', error);
+            return [];
+        });
+    } else {
+        return [];
+    }
+}
+
+function loadRateTypeCredit(rate) {
+	const inputTasaCred = document.getElementById("tasaCred");
+	inputTasaCred.value = rate;
+}
+
+function loadRateTypeInvest(rate) {
+	const inputTasaInvest = document.getElementById("tasaInvest");
+	inputTasaInvest.value = rate;
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const entityId = urlParams.get('id');
+
+const selectTypeCred = document.getElementById("typeCred");
+const selectTypeInvest = document.getElementById("typeInvest")
+
+getTypeCredits(entityId)
+    .then(listTypeCredits => {
+        listTypeCredits.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_cred; 
+            option.textContent = opcion.name_cred;
+			option.dataset.rateCred = opcion.rate_cred;
+            selectTypeCred.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectTypeCred.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const rate = selectedOption.dataset.rateCred;
+    loadRateTypeCredit(rate);
+});
+
+getTypeInvestments(entityId)
+.then(listTypeInvestments => {
+			listTypeInvestments.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_invest; 
+            option.textContent = opcion.name_invest;
+			option.dataset.rateInv = opcion.rate_invest;
+            selectTypeInvest.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectTypeInvest.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const rate = selectedOption.dataset.rateInv;
+    loadRateTypeInvest(rate);
+});
+
+</script>
+<script src="../scripts/Credits.js"></script>
+<script src="../scripts/Investment.js"></script>
   
 </body>
 </html>

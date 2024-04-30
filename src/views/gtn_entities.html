@@ -65,10 +65,10 @@
                     <span class="table-title">
                         Créditos
                     </span>
-                    <span class="table-row-count"></span>
+                    <span class="table-row-count tableCred"></span>
                     <button class="btn btn--primary" style="margin-left: 65px;">Crear</button>
                 </span>
-                <div class="table-wrapper">
+                <div class="table-wrapper tableWrCred">
                     <!-- generate table here -->
                 </div>
             </div>
@@ -78,19 +78,15 @@
                     <span class="table-title">
                         Inversiones
                     </span>
-                    <span class="table-row-count"></span>
+                    <span class="table-row-count tableInvest"></span>
                     <button class="btn btn--primary" style="margin-left: 65px;">Crear</button>
                 </span>
-                <div class="table-wrapper">
+                <div class="table-wrapper tableWrInvest">
                     <!-- generate table here -->
                 </div>
             </div>
         </div>
         
-
-        
-        
-
         <script>
             function logOut() {
                 localStorage.removeItem('token');
@@ -105,108 +101,114 @@
                 window.location.href = "gtn_entities.html"
             }
 
-            async function getEntityFinancial() {
+            document.addEventListener("DOMContentLoaded", function() {
+                async function getEntityFinancial() {
 
-                const listEntities = [];
+                    let listEntities = [];
 
-                try {
-                const response = await fetch('http://localhost/simuladorCredInver-apirest/api-rest/getFinancialEntity');
-                const data = await response.json();
-            
-                if (data.status = 'OK') {
-                    listEntities = data.listEntities;
-                    return listEntities;
-                } else {
-                    console.error('La respuesta de la API no fue exitosa:', data.status);
-                    return listEntities; // Devuelve la lista vacía en caso de error
-                }
-            
-                } catch (error) {
-                    console.error('Error del servidor:', error);
-                    return listEntities;
-                }
-            }
-
-            async function getTypeCredits(id_entity) {
+                    try {
+                    const response = await fetch('http://localhost/simuladorCredInver-apirest/api-rest/getFinancialEntity');
+                    const data = await response.json();
                 
-                const typeCredits = [];
+                    if (data.status == 'OK') {
+                        listEntities = data.entities;
+                        return listEntities;
+                    } else {
+                        console.error('La respuesta de la API no fue exitosa:', data.status);
+                        return listEntities; // Devuelve la lista vacía en caso de error
+                    }
+                
+                    } catch (error) {
+                        console.error('Error del servidor:', error);
+                        return listEntities;
+                    }
+                }
 
-                if ($id_entity != 0) {
-                    const id = {
-                        "id_entity": id_entity
-                    };
-
-                    fetch('http://localhost/simuladorCredInver-apirest/api-rest/getTypesCredits', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(id)
-                    })
-                    .then(response => response.json())
-                    .then(data=> {
-                        if (data.status == 'OK') {
-                            loadTableCredits(data.types_credits)
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error del servidor', error);
-                    });
-                } 
-            }
-
-            function loadTableCredits (typeCredits) {
-
-                let tableRowCount = document.getElementsByClassName('table-row-count');
-                tableRowCount[0].innerHTML = `(${typeCredits.length}) Existentes`;
-
-                let tableBody = document.getElementById('table-rows');
-
-                const mappedRecords = typeCredits
-                .map(
-                (typeCredit) => {
-                    return `<tr>
+                async function getTypeCredits(id_entity) {
                     
-                    <td class="text-table">${typeCredit.name_cred}</td>
-                    <td class="text-table">${typeCredit.rate_cred}</td>
-                                    
-                    <td class="sticky-right">
-                        <button class="btn btn--primary">Eliminar</button>
-                    </td>
-                </tr>`;
+                    const typeCredits = [];
+
+                    if (id_entity != 0) {
+                        const id = {
+                            "id_entity": id_entity
+                        };
+
+                        fetch('http://localhost/simuladorCredInver-apirest/api-rest/getTypesCredits', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(id)
+                        })
+                        .then(response => response.json())
+                        .then(data=> {
+                            if (data.status == 'OK') {
+                                loadTableCredits(data.types_credits)
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error del servidor', error);
+                        });
+                    } 
+                }
+
+                function loadTableCredits (typeCredits) {
+
+                    let tableRowCount = document.getElementsByClassName('tableCred');
+                    tableRowCount[0].innerHTML = `(${typeCredits.length}) Existentes`;
+
+                    let tableBody = document.getElementById('table-rows-cred');
+
+                    const mappedRecords = typeCredits
+                    .map(
+                    (typeCredit) => {
+                        return `<tr>
+                        
+                        <td class="text-table">${typeCredit.name_cred}</td>
+                        <td class="text-table">${typeCredit.rate_cred}</td>
+                                        
+                        <td class="sticky-right">
+                            <button class="btn btn--primary">Eliminar</button>
+                        </td>
+                    </tr>`;
+                    });
+
+                    const tableWrapper = document.querySelector('.tableWrCred');
+
+                    tableWrapper.innerHTML = DOMPurify.sanitize(`
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre Crédito</th>
+                                    <th>Tasa de Interés</th>
+                                    <th class="sticky-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-rows-cred">
+                                ${mappedRecords.join('')}
+                            </tbody>                    
+                        </table>
+                    `);
+                }
+
+                const select = document.getElementById("frecInv");
+
+                getEntityFinancial().then(listEntities => {
+                listEntities.forEach(opcion => {
+                    const option = document.createElement("option");
+                    option.value = opcion.id; 
+                    option.textContent = opcion.name;
+                    select.appendChild(option);
                 });
-
-                const tableWrapper = document.querySelector('.table-wrapper');
-
-                tableWrapper.innerHTML = DOMPurify.sanitize(`
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre Crédito</th>
-                                <th>Tasa de Interés</th>
-                                <th class="sticky-right"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-rows">
-                            ${mappedRecords.join('')}
-                        </tbody>                    
-                    </table>
-                `);
-            }
-
-            const select = document.getElementById("frecInv");
-
-            getEntityFinancial().forEach(opcion => {
-                const option = document.createElement("option");
-                option.value = opcion.id; 
-                option.textContent = opcion.name;
-                select.appendChild(option);
+            }).catch(error => {
+                console.error("Error al cargar las entidades financieras:", error);
             });
 
-            select.addEventListener("change", function() {
-                const idSelected = this.value;
-                getTypeCredits(idSelected);
-            })
+                select.addEventListener("change", function() {
+                    const idSelected = this.value;
+                    getTypeCredits(idSelected);
+                });
+            });
 
         </script>
     </body>

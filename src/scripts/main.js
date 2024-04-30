@@ -186,14 +186,13 @@ document.addEventListener("DOMContentLoaded", function() {
         <h2>${entity.name}</h2>
         <p>${entity.phone}</p>
         <p>${entity.address}</p>
-        <a href="views/entity_view.html" class="btn mt-4">Simuladores</a>
+        <a href="views/entity_view.html?id=${entity.id}" class="btn mt-4">Simuladores</a>
       `;
 
       card.appendChild(background);
       card.appendChild(content);
       container.appendChild(card);
     });
-  }
-  
+  }  
 });
 
