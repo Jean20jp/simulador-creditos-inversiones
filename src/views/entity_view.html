@@ -24,28 +24,6 @@
 				Dashboard
 			</a>
 		</div>
-	</nav>
-</header>
-
-<div style="height: 1rem;"></div>
-
-<body style="overflow-y: scroll;">
-
-	<nav class="menu__wrapper">
-		<div class="logo__wrapper">
-			<a
-				href="../index.html"
-				title="Logo"
-				class="logo"
-			>
-			<svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true">
-				<image href="../assets/bank.svg" width="16" height="16" />
-			</svg>
-			</a>
-			<a href="../index.html" class="page__title">
-				Dashboard
-			</a>
-		</div>
 		<div class="action-buttons"> 
 
 			<button id="btnGtnEntities" onclick="hrefGtnEntities()" class="action-button">
@@ -71,7 +49,12 @@
 				</svg>
 			</button> 
 		</div>
-	</nav>	
+	</nav>
+</header>
+
+<div style="height: 3rem;"></div>
+
+<body style="overflow-y: scroll;">	
 
 <div class="container_main">
 
@@ -322,6 +305,33 @@ async function getTypeInvestments(id_entity) {
     }
 }
 
+async function getCobrosIndirectos(id_entity) {
+    if (id_entity != 0) {
+        const id = { "id_entity": id_entity };
+
+        return fetch('http://localhost/simuladorCredInver-apirest/api-rest/getCobrosIndirectos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(id)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == 'OK') {
+                return data.cobros_indirect;
+            } else {
+                console.error('La respuesta de la API no fue exitosa:', data.status);
+                return [];
+            }
+        })
+        .catch(error => {
+            console.error('Error del servidor:', error);
+            return [];
+        });
+    } else {
+        return [];
+    }
+}
+
 function loadRateTypeCredit(rate) {
 	const inputTasaCred = document.getElementById("tasaCred");
 	inputTasaCred.value = rate;
@@ -332,11 +342,23 @@ function loadRateTypeInvest(rate) {
 	inputTasaInvest.value = rate;
 }
 
+function loadMontoCobroIndCrec(monto) {
+	const inputMontoCobrInd = document.getElementById("montoCobrIndCred");
+	inputMontoCobrInd.value = monto;
+}
+
+function loadMontoCobroIndInvest(monto) {
+	const inputMontoCobrInd = document.getElementById("montoCobrIndInvest");
+	inputMontoCobrInd.value = monto;
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const entityId = urlParams.get('id');
 
 const selectTypeCred = document.getElementById("typeCred");
 const selectTypeInvest = document.getElementById("typeInvest")
+const selectCobrIndCred = document.getElementById("cobroIndirCred")
+const selectCobrIndInvest = document.getElementById("cobroIndirInvest")
 
 getTypeCredits(entityId)
     .then(listTypeCredits => {
@@ -376,6 +398,46 @@ selectTypeInvest.addEventListener("change", function() {
     const selectedOption = this.options[this.selectedIndex];
     const rate = selectedOption.dataset.rateInv;
     loadRateTypeInvest(rate);
+});
+
+getCobrosIndirectos(entityId)
+.then(listCobrosInd => {
+			listCobrosInd.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_cobro; 
+            option.textContent = opcion.name_cobro;
+			option.dataset.montoCobro = opcion.monto_cobro;
+            selectCobrIndCred.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectCobrIndCred.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const monto = selectedOption.dataset.montoCobro;
+    loadMontoCobroIndCrec(monto);
+});
+
+getCobrosIndirectos(entityId)
+.then(listCobrosInd => {
+			listCobrosInd.forEach(opcion => {
+            const option = document.createElement("option");
+            option.value = opcion.id_cobro; 
+            option.textContent = opcion.name_cobro;
+			option.dataset.montoCobro = opcion.monto_cobro;
+            selectCobrIndInvest.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar tipos de créditos:", error);
+    });
+
+selectCobrIndInvest.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const monto = selectedOption.dataset.montoCobro;
+    loadMontoCobroIndInvest(monto);
 });
 
 </script>

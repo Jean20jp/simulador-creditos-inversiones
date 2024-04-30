@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../styles/style.css">
         <script src="purify.min.js"></script>
     </head>
-    <body>
+    <body style="overflow-y: scroll;">
         <nav class="menu__wrapper">
             <div class="logo__wrapper">
                 <a
@@ -46,10 +46,10 @@
             </div>
         </nav>
 
-        <div class="center-wrap-gtn" style="width: 500px; top: 15%;">
+        <div class="center-wrap-gtn" style="width: 500px; top: 15%; display: grid; grid-template-columns: 60fr 60fr; gap: 60px;">
             <div class="section text-center">
                 <div class="form-group mt-2">
-                    <select 
+                    <select style="width: 300px;"
                     name="frecInv" class="form-style" id="frecInv">
                         <option value="" disabled selected>Entidad Financiera</option>
                         
@@ -57,6 +57,7 @@
                     <i class="input-icon uil uil-university"></i>
                 </div>
             </div>
+            <a style="width: 300px;" id="btnOpenModal" onclick="openModal()" href="#" class="btn mt-4">Registrar cobros indirectos</a>
         </div>
 
         <div class="container-tables">
@@ -66,7 +67,7 @@
                         Créditos
                     </span>
                     <span class="table-row-count tableCred"></span>
-                    <button class="btn btn--primary" style="margin-left: 65px;">Crear</button>
+                    <button id="btnAddCred" class="btn btn--primary" style="margin-left: 65px;">Crear</button>
                 </span>
                 <div class="table-wrapper tableWrCred">
                     <!-- generate table here -->
@@ -79,15 +80,43 @@
                         Inversiones
                     </span>
                     <span class="table-row-count tableInvest"></span>
-                    <button class="btn btn--primary" style="margin-left: 65px;">Crear</button>
+                    <button id="btnAddInvest" class="btn btn--primary" style="margin-left: 65px;">Crear</button>
                 </span>
                 <div class="table-wrapper tableWrInvest">
                     <!-- generate table here -->
                 </div>
             </div>
         </div>
+
+        <div id="modal" class="modal-ci">
+            <div class="modal-content">
+                <h2>Registro de cobros indirectos</h2>
+                <div class="form-group">
+                    <input class="form-style" placeholder="Nombre del cobro indirecto" id="nameCobroInd" type="text" style="margin-bottom: 10px; width: 390px;">
+                    <i class="input-icon uil uil-pen"></i>
+                </div>
+                <div class="form-group">
+                    <input class="form-style" placeholder="Monto $" id="montoCobroInd" type="text" style="width: 390px;">
+                    <i class="input-icon uil uil-dollar-alt"></i>
+                </div>
+                <div class="dropzone-actions">
+                    <a id="btnRegisterCobrInd" onclick="registerCobroIndirecto()" href="javascript:void(0)" class="btn mt-4">Guardar</a>
+                    <a id="btnCancelRegCobrInd" onclick="closeModal()" href="javascript:void(0)" class="btn mt-4">Cancelar</a>
+                </div>
+            </div>
+        </div>
         
         <script>
+            function openModal() {
+                var modal = document.getElementById("modal");
+                modal.style.display = "block";
+            }
+
+            function closeModal() {
+                var modal = document.getElementById("modal");
+                modal.style.display = "none";
+            }
+
             function logOut() {
                 localStorage.removeItem('token');
                 window.location.href = "../index.html";
@@ -102,6 +131,205 @@
             }
 
             document.addEventListener("DOMContentLoaded", function() {
+
+                const btnRegisterCobrInd = document.getElementById("btnRegisterCobrInd");
+                btnRegisterCobrInd.addEventListener("click", registerCobroIndirecto);
+
+                const btnAddCred = document.getElementById("btnAddCred");
+
+                btnAddCred.addEventListener("click", function() {
+                // Obtener referencia a la tabla
+                const table = document.querySelector('.table-wrapper.tableWrCred table');
+
+                // Crear una nueva fila
+                const newRow = table.insertRow(-1);
+
+                // Agregar dos celdas a la fila para ingresar datos
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+
+                // Agregar inputs a las celdas
+                cell1.innerHTML = '<input style="width: 130px;" type="text" placeholder="Ingrese Nombre">';
+                cell2.innerHTML = '<input style="width: 90px;" type="text" placeholder="Ingrese Tasa de Interes">';
+
+                // Agregar dos botones a la fila ("Aceptar" y "Cancelar")
+                const cell3 = newRow.insertCell(2);
+                const cell4 = newRow.insertCell(3);
+                cell3.innerHTML = '<button style="width: 5px; padding-left: 25px; padding-right: 25px;" class="btn btn--success">✔</button>';
+                cell4.innerHTML = '<button style="width: 5px; padding-left: 25px; padding-right: 25px; margin-left: -17px;" class="btn btn--danger">✘</button>';
+
+                // Agregar evento de clic al botón "Cancelar"
+                cell4.querySelector('button').addEventListener("click", function() {
+                    // Eliminar la fila al hacer clic en "Cancelar"
+                    table.deleteRow(newRow.rowIndex);
+                });
+
+                cell3.querySelector('button').addEventListener("click", function() {
+                    const nameCred = cell1.querySelector('input').value;
+                    const rateCred = cell2.querySelector('input').value;
+                    registerTypeCredit(nameCred, rateCred);
+                });
+            });
+
+            const btnAddInvest = document.getElementById("btnAddInvest");
+
+            btnAddInvest.addEventListener("click", function() {
+                // Obtener referencia a la tabla
+                const table = document.querySelector('.table-wrapper.tableWrInvest table');
+
+                // Crear una nueva fila
+                const newRow = table.insertRow(-1);
+
+                // Agregar dos celdas a la fila para ingresar datos
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+
+                // Agregar inputs a las celdas
+                cell1.innerHTML = '<input style="width: 130px;" type="text" placeholder="Ingrese Nombre">';
+                cell2.innerHTML = '<input style="width: 90px;" type="text" placeholder="Ingrese Tasa de Interes">';
+
+                // Agregar dos botones a la fila ("Aceptar" y "Cancelar")
+                const cell3 = newRow.insertCell(2);
+                const cell4 = newRow.insertCell(3);
+                cell3.innerHTML = '<button style="width: 5px; padding-left: 25px; padding-right: 25px;" class="btn btn--success">✔</button>';
+                cell4.innerHTML = '<button style="width: 5px; padding-left: 25px; padding-right: 25px; margin-left: -17px;" class="btn btn--danger">✘</button>';
+
+                // Agregar evento de clic al botón "Cancelar"
+                cell4.querySelector('button').addEventListener("click", function() {
+                    // Eliminar la fila al hacer clic en "Cancelar"
+                    table.deleteRow(newRow.rowIndex);
+                });
+
+                cell3.querySelector('button').addEventListener("click", function() {
+                    const nameInvest = cell1.querySelector('input').value;
+                    const rateInvest = cell2.querySelector('input').value;
+                    registerTypeInvest(nameInvest, rateInvest);
+                });
+            });
+
+
+            async function registerCobroIndirecto() {
+
+                const nameCobroInd = document.getElementById('nameCobroInd').value;
+                const montoCobroInd = document.getElementById('montoCobroInd').value;
+                const selectedOption = select.options[select.selectedIndex];
+                const selectedValue = selectedOption.value;
+
+                if (nameCobroInd !== '' && montoCobroInd !== '') {
+
+                    const token = localStorage.getItem('token');
+
+                    const dataCobrInd = {
+                        id_ent_per: selectedValue,
+                        name_cobro: nameCobroInd,
+                        monto_cobro: montoCobroInd
+                    };
+
+                    fetch('http://localhost/simuladorCredInver-apirest/api-rest/registerCobroIndirecto', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(dataCobrInd)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            window.alert("Registro Satisfactorio")
+                            window.location.href = "gtn_entities.html";
+                        } else {
+                            window.alert("Error al generar registrar")
+                        }       
+                    })
+                    .catch(error => {
+                        console.error('Error del servidor', error);
+                    });
+                } else {
+                    window.alert("Se requiere todos los campos");
+                }
+                }
+
+            async function registerTypeCredit(nameCred, rateCred) {
+
+                const selectedOption = select.options[select.selectedIndex];
+                const selectedValue = selectedOption.value;
+
+                if (nameCred !== '' && rateCred !== '') {
+
+                    const token = localStorage.getItem('token');
+
+                    const dataTypeCred = {
+                        id_ent_per: selectedValue,
+                        name_cred: nameCred,
+                        rate_cred: rateCred 
+                    };
+
+                    fetch('http://localhost/simuladorCredInver-apirest/api-rest/registerTypeCredit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(dataTypeCred)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            window.alert("Registrado correctamente");
+                            window.location.href = "gtn_entities.html";
+                        } else {
+                            window.alert("Credenciales incorrectas")
+                        }       
+                    })
+                    .catch(error => {
+                        console.error('Error del servidor', error);
+                    });
+                } else {
+                    window.alert("Se requiere todos los campos");
+                }
+            }
+
+            async function registerTypeInvest(nameInvest, rateInvest) {
+
+                const selectedOption = select.options[select.selectedIndex];
+                const selectedValue = selectedOption.value;
+
+                if (nameInvest !== '' && rateInvest !== '') {
+
+                    const token = localStorage.getItem('token');
+
+                    const dataTypeInvest = {
+                        id_ent_per: selectedValue,
+                        name_invest: nameInvest,
+                        rate_invest: rateInvest 
+                    };
+
+                    fetch('http://localhost/simuladorCredInver-apirest/api-rest/registerTypeInvestment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(dataTypeInvest)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            window.alert("Registrado correctamente");
+                            window.location.href = "gtn_entities.html";
+                        } else {
+                            window.alert("Credenciales incorrectas")
+                        }       
+                    })
+                    .catch(error => {
+                        console.error('Error del servidor', error);
+                    });
+                } else {
+                    window.alert("Se requiere todos los campos");
+                }
+                }
+
                 async function getEntityFinancial() {
 
                     let listEntities = [];
@@ -125,8 +353,6 @@
                 }
 
                 async function getTypeCredits(id_entity) {
-                    
-                    const typeCredits = [];
 
                     if (id_entity != 0) {
                         const id = {
@@ -144,6 +370,32 @@
                         .then(data=> {
                             if (data.status == 'OK') {
                                 loadTableCredits(data.types_credits)
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error del servidor', error);
+                        });
+                    } 
+                }
+
+                async function getTypeInvestments(id_entity) {
+
+                    if (id_entity != 0) {
+                        const id = {
+                            "id_entity": id_entity
+                        };
+
+                        fetch('http://localhost/simuladorCredInver-apirest/api-rest/getTypesInvestments', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(id)
+                        })
+                        .then(response => response.json())
+                        .then(data=> {
+                            if (data.status == 'OK') {
+                                loadTableInvest(data.types_investments)
                             }
                         })
                         .catch(error => {
@@ -191,6 +443,45 @@
                     `);
                 }
 
+                function loadTableInvest(typeInvest) {
+
+                    let tableRowCount = document.getElementsByClassName('tableInvest');
+                    tableRowCount[0].innerHTML = `(${typeInvest.length}) Existentes`;
+
+                    let tableBody = document.getElementById('table-rows-invest');
+
+                    const mappedRecords = typeInvest
+                    .map(
+                    (typeInvest) => {
+                        return `<tr>
+                        
+                        <td class="text-table">${typeInvest.name_invest}</td>
+                        <td class="text-table">${typeInvest.rate_invest}</td>
+                                        
+                        <td class="sticky-right">
+                            <button class="btn btn--primary">Eliminar</button>
+                        </td>
+                    </tr>`;
+                    });
+
+                    const tableWrapper = document.querySelector('.tableWrInvest');
+
+                    tableWrapper.innerHTML = DOMPurify.sanitize(`
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre Crédito</th>
+                                    <th>Tasa de Interés</th>
+                                    <th class="sticky-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-rows-invest">
+                                ${mappedRecords.join('')}
+                            </tbody>                    
+                        </table>
+                    `);
+                }
+
                 const select = document.getElementById("frecInv");
 
                 getEntityFinancial().then(listEntities => {
@@ -200,15 +491,16 @@
                     option.textContent = opcion.name;
                     select.appendChild(option);
                 });
-            }).catch(error => {
-                console.error("Error al cargar las entidades financieras:", error);
-            });
-
-                select.addEventListener("change", function() {
-                    const idSelected = this.value;
-                    getTypeCredits(idSelected);
+                }).catch(error => {
+                    console.error("Error al cargar las entidades financieras:", error);
                 });
-            });
+
+                    select.addEventListener("change", function() {
+                        const idSelected = this.value;
+                        getTypeCredits(idSelected);
+                        getTypeInvestments(idSelected);
+                    });
+                });
 
         </script>
     </body>

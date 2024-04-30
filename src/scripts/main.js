@@ -10,7 +10,6 @@ const toggleModalAddEntity = () => {
   }
 };
 
-
 const dropzoneBox = document.getElementsByClassName("dropzone-box")[0];
 
 const inputFiles = document.querySelectorAll(
