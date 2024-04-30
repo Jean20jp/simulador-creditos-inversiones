@@ -103,40 +103,26 @@ function generarTabla() {
 function imprimirPDF() {
     alert('Generando PDF.'); // Agregar este alert para verificar la ejecución de la función
 
-    // Obtener el tipo de amortización seleccionado
-    const tipoAmortizacion = document.getElementById('sistAmortCred').value;
-
-    // Obtener la tabla de amortización según el tipo de amortización
-    let tablaHTML = '';
-    if (tipoAmortizacion === 'aleman') {
-        const tablaAleman = document.getElementById('tablaAmortizacionAleman');
-        if (tablaAleman) {
-            tablaHTML = tablaAleman.outerHTML;
-        } else {
-            console.error('No se encontró la tabla de amortización alemana.');
-            return;
-        }
-    } else if (tipoAmortizacion === 'frances') {
-        const tablaFrances = document.getElementById('tablaAmortizacionFrances');
-        if (tablaFrances) {
-            tablaHTML = tablaFrances.outerHTML;
-        } else {
-            console.error('No se encontró la tabla de amortización francesa.');
-            return;
-        }
-    } else {
-        console.error('Tipo de amortización no reconocido.');
-        return;
-    }
+    // Obtener el contenido HTML de la tabla de detalle de cuotas según el tipo de amortización
+    let tablaHTML = document.getElementById('tablaDetalleContainer').innerHTML;
 
     // Crear un objeto Blob a partir del contenido HTML de la tabla
-    const blob = new Blob([tablaHTML], { type: 'text/html' });
+    const blob = new Blob([tablaHTML], { type: 'application/pdf' });
 
     // Crear un objeto URL a partir del Blob
     const url = URL.createObjectURL(blob);
 
-    // Abrir una nueva ventana con el PDF generado
-    window.open(url);
+    // Crear un elemento <a> para descargar el archivo PDF
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'tabla_amortizacion.pdf'; // Nombre del archivo PDF
+
+    // Agregar el elemento <a> al documento y simular el clic para iniciar la descarga
+    document.body.appendChild(link);
+    link.click();
+
+    // Eliminar el elemento <a> del documento después de la descarga
+    document.body.removeChild(link);
 }
 
 
