@@ -198,7 +198,7 @@ h6 span{
   position: relative;
   width: 540px;
   max-width: 100%;
-  height: 580px;
+  height: 590px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
@@ -754,4 +754,35 @@ body.closed .modal {
 .container-tables {
   display: grid;
   grid-template-columns: 200fr 200fr; /* Divide el contenedor en dos columnas de igual ancho */
+}
+
+.modal-ci {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #074173;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #074173;
+  border-radius: 8px;
+  width: 30%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.form-style {
+  width: 100%;
 }
