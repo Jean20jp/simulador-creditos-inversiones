@@ -34,13 +34,21 @@ Este proyecto es una aplicación web desarrollada en HTML, CSS y JavaScript para
     ```sh
     cd simulador-creditos-inversione
     ```
-3. Configura la base de datos:
+3. Cambia a la rama del frontend y configúrala:
+    ```sh
+    git checkout dev-feature-front
+    ```
+4. Cambia a la rama del backend y configúrala:
+    ```sh
+    git checkout dev-feature-apirest
+    ```
+5. Configura la base de datos:
     - Crea una base de datos en MySQL.
     - Importa el archivo `database.sql` en tu base de datos:
         ```sh
         mysql -u tu_usuario -p tu_base_de_datos < database.sql
         ```
-4. Configura la conexión a la base de datos en el archivo `config/EnvironmentVariables.php`:
+6. Configura la conexión a la base de datos en el archivo `config/EnvironmentVariables.php`:
     ```php
     <?php
     private $DB_HOST = "localhost";
@@ -49,9 +57,9 @@ Este proyecto es una aplicación web desarrollada en HTML, CSS y JavaScript para
     private $DB_PASSWORD = "";
     ?>
     ```
-5. Asegúrate de que el servidor web tenga permisos de escritura en el directorio donde se encuentra el proyecto.
+7. Asegúrate de que el servidor web tenga permisos de escritura en el directorio donde se encuentra el proyecto.
 
-6. Inicia tu servidor web y navega a la dirección donde está alojado el proyecto.
+8. Inicia tu servidor web y navega a la dirección donde está alojado el proyecto.
 
 ## Uso
 
